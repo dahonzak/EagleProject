@@ -1,0 +1,5 @@
+@media only screen and (max-width: 600px) {
+  .mainPageBtn {
+    width:calc(100% - 2em);
+  }
+}

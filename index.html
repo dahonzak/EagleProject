@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <html lang="en" xml:lang="en" xmlns= "http://www.w3.org/1999/xhtml">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Orienteering Takoma Park</title>
+  <link rel="icon" type="image/x-icon" href="/images/icon.png" >
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <link href="css/mobile.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div id='bg'></div>
+  <div id='bg_overlay'></div>
+  <div class='container'>
+    
+    <div class='tab show'>
+      <div id="box"></div>
+      <h1>Orienteering</h1>
+      <h2>Takoma Park, MD</h2>
+      <div  class='button mainPageBtn' onclick='tab(1);'>Get Started</div>
+    </div>
+
+    <div class='tab'>
+      <h1>Choose</h1>
+      <div class='choice'>
+        <div onclick='tab(5);'>New to Orienteering?</div>
+        <div onclick='tab(2);'>Quick Start</div>
+      </div>
+    </div>
+
+    <div class='tab'>
+      <h1>Maps</h1>
+      <div id='maps'></div>
+    </div>
+
+    <div class='tab'>
+      <!-- Course Download Map or print and see details -->
+    </div>
+
+    <div class='tab'>
+      <h1>Results</h1>
+      <!-- Course Time as well as share button and other course details -->
+    </div>
+    
+    <div class='tab'>
+      <h1>Learn Orienteering</h1>
+    </div>
+    
+  </div>
+  <script src="js/script.js"></script>
+</body>
+
+</html>

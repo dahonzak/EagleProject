@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&family=Rozha+One&display=swap');
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none; 
+  font-weight: normal;
+  user-select: none;
+}
+:root {
+  /* Background */
+  --bg: url("/images/bg.png") no-repeat fixed center center;
+  --bg_overlay:rgba(0,0,0,0.85);
+  --color:white;
+  --colorIn:black;
+  /* Other */
+  --c1:#e96f0c;
+  --c2:#205765;
+}
+html,body {
+  font-family: "Lato",sans-serif;
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  color:var(--color);
+}
+#bg {
+  position:fixed;
+  z-index:-1;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background: var(--bg);
+  background-size:cover;
+  filter: grayscale(100%);
+}
+#bg_overlay {
+  z-index:0;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height:100vh;
+  background: var(--bg_overlay);
+}
+.container {
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:1;
+  height: 100vh;
+  width:100vw;
+  text-align:center;
+  /* color:var(--color); */
+}
+.container h1 {
+  font-family:"Rozha One",serif;
+  font-size:5em;
+  padding:0;
+  margin:0;
+}
+.container h2 {
+  padding:0;
+  margin:0;
+}
+.button {
+  font-size:1.5em;
+  padding:0.5em;
+  margin:0.5em;
+  border:none;
+  border-radius:0.5em;
+  background:var(--colorIn);
+  color:var(--color);
+  transition:0.2s;
+  cursor:pointer;
+}
+.button:hover {
+  opacity:0.7;
+}
+.mainPageBtn {
+  width:calc(50% - 2em);
+  background:linear-gradient(-200deg, var(--c2),var(--c1));
+  display:block;
+  margin:20px auto;
+}
+.tab {
+  display:none;
+}
+#box {
+  margin:30px auto;
+  display:block;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, white 50%, #ff8800 50%);
+}
+.show {
+  display:block;
+}
+.choice {
+  width:100vw;
+}
+.choice div {
+  display:inline-block;
+  background:var(--c1);
+  color:var(--color);
+  width:calc(25% - 100px);
+  padding:25px;
+  margin:25px;
+  border-radius:0.5em;
+  transition:0.2s;
+  cursor:pointer;
+}
+.choice div:hover {
+  background:var(--color);
+  color:var(--colorIn);
+}
