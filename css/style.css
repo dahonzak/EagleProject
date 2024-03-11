@@ -113,3 +113,13 @@ html,body {
   background:var(--color);
   color:var(--colorIn);
 }
+#maps {
+  width:100vw;
+  background:red;
+}
+.mapselect {
+  width:calc(25vw - 50px);
+  height:25vw;
+  border-radius:0.5em;
+  margin:25px;
+}

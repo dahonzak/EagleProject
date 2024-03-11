@@ -13,19 +13,23 @@ const orienteering = {
   controls:[], //{"Control":"s6df57asdf6","Timestamp":0}
   currentControl:0
 };
-const readTextFile = function(file) {
+const readTextFile = function(file,callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
     rawFile.open("GET", file, true);
     rawFile.onreadystatechange = function() {
         if (rawFile.readyState === 4 && rawFile.status == "200") {
-            return rawFile.responseText;
+            callback(rawFile.responseText);
         }
     }
     rawFile.send(null);
 };
-const maps = JSON.parse(readTextFile("/json/maps.json"))["Maps"];
+readTextFile("/json/maps.json",function(responseText) {
+basic.maps = JSON.parse(responseText)["Maps"]});
 const mapArray = document.getElementById("maps");
+
+// ----------------end of initilization-------------------- //
+
 const tab = function(tab) {
   const classes = document.getElementsByClassName("tab");
   const shown = document.getElementsByClassName("show");
@@ -55,4 +59,7 @@ const loadMaps = function() {
 const loadMap = function(map) {
   
 };
+
+// -------------load in stuff------------ //
+
 loadMaps();
