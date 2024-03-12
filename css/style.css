@@ -115,11 +115,54 @@ html,body {
 }
 #maps {
   width:100vw;
-  background:red;
+  height:200px;
 }
 .mapselect {
-  width:calc(25vw - 50px);
-  height:25vw;
-  border-radius:0.5em;
+  display:inline-block;
+  position:relative;
+  width:calc(40vh);
+  height:30vh;
+  border-radius:30px;
   margin:25px;
+  box-shadow: 0px 0px 30px 0.2px var(--colorIn);
+  background-size:cover;
+  transition: 0.2s;
+}
+.mapselect:hover {
+  box-shadow: 0px 0px 30px 0.2px var(--color);
+  opacity:0.8;
+  cursor:pointer;
+}
+.mapname {
+  display:none;
+}
+.mapdiff {
+  position:absolute;
+  right:10px;top:10px;
+  height:25px;
+  width:25px;
+  border-radius:100%;
+}
+.maplength {
+  position:absolute;
+  background:var(--colorIn);
+  color:var(--color);
+  bottom:10px;
+  left:10px;
+  padding:5px 10px;
+  border-radius: 10px;
+}
+.footer {
+  position:fixed;
+  bottom:10px;
+  display:block;
+  /* width:calc(100% - 40px); */
+  font-size:15px;
+  background:var(--colorIn);
+  color:var(--color);
+  padding:5px 10px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius: 10px;
+  opacity:0.5;
 }

@@ -1,5 +1,6 @@
 {
   "Maps":[
-    {"Name": "Starter Map", "Difficulty": 0, "Controls":[], "Map":"", "Picture":""}
+    {"Name": "Starter Map", "Difficulty": 0, "Controls":["38.98922451161988, -77.00290428824408","38.9920659552945, -77.0065548167455"], "Map":"", "Picture":"/images/pic2.jpg"},
+    {"Name":"Blair", "Difficulty":0, "Controls":["38.98922451161988, -77.00290428824408","39.018298665064115, -77.01238743937252"], "Map":"", "Picture":"/images/pic2.jpg"}
   ]
 }

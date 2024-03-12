@@ -25,7 +25,7 @@ const readTextFile = function(file,callback) {
     rawFile.send(null);
 };
 readTextFile("/json/maps.json",function(responseText) {
-basic.maps = JSON.parse(responseText)["Maps"]});
+basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
 const mapArray = document.getElementById("maps");
 
 // ----------------end of initilization-------------------- //
@@ -37,29 +37,93 @@ const tab = function(tab) {
   classes[tab].classList.add("show");
   page.tab = tab;
 };
+const calcDistance = function(map) {
+  let distance = 0.0;
+  for (let i = 0; i < map["Controls"].length; i++) {
+    if (i > 0) {
+      let lat1 = toRad(map["Controls"][i].split(",")[0]);
+      let lon1 = toRad(map["Controls"][i].split(",")[1]);
+      let lat2 = toRad(map["Controls"][i-1].split(",")[0]);
+      let lon2 = toRad(map["Controls"][i-1].split(",")[1]);
+      distance += (Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*6371);
+    }
+  }
+  return distance;
+};
+const toRad = function(Value) {
+    return Value * Math.PI / 180;
+};
 const loadMaps = function() {
-  for (let i = 0; i < maps.length; i++) {
+  for (let i = 0; i < basic.maps.length; i++) {
     let map = document.createElement("div");
     map.classList.add("mapselect");
+    map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
     let mapName = document.createElement("div");
     mapName.classList.add("mapname");
-    mapName.textContent = maps[i]["Name"];
+    mapName.textContent = basic.maps[i]["Name"];
     map.appendChild(mapName);
     let mapDiff = document.createElement("div");
     mapDiff.classList.add("mapdiff");
-    mapDiff.style.background = basic.colors[maps[i]["Difficulty"]];
+    mapDiff.style.background = basic.colors[basic.maps[i]["Difficulty"]];
     map.appendChild(mapDiff);
     let mapLength = document.createElement("div");
     mapLength.classList.add("maplength");
-    mapLength.textContent = maps[i]["Length"];
+    mapLength.textContent = calcDistance(basic.maps[i]).toFixed(1)+" km";
     map.appendChild(mapLength);
     mapArray.appendChild(map);
   }
 };
 const loadMap = function(map) {
-  
+  // load page where you can download and share map as well as start the course
 };
+const downloadMap = async function(map) {
+  const image = await fetch(map);
+  const imageBlog = await image.blob();
+  const imageURL = URL.createObjectURL(imageBlog);
+  const link = document.createElement('a')
+  link.href = imageURL;
+  link.download = "Map";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+};
+const showPosition = function(position) {
+  const footer = document.getElementsByClassName("footer")[0];
+  footer.textContent = " Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
+  if (position.coords.accuracy >= 50) {
+    footer.style.background = "red";
+  }
+  else {
+    footer.style.background = "var(--colorIn)";
+  }
+};
+const showError = function(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      location.href='/error';
+      break;
+    case error.POSITION_UNAVAILABLE:
+      location.href='/error';
+      break;
+    case error.TIMEOUT:
+      location.href='/error';
+      break;
+    case error.UNKNOWN_ERROR:
+      location.href='/error';
+      break;
+  }
+};
+const getLocation = function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  }
+};
+const startCourse = function() {
+  //opens course timer and starts course with time stamps
+};
+setInterval(getLocation,1000);
+
 
 // -------------load in stuff------------ //
 
-loadMaps();
+
