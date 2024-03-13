@@ -27,7 +27,12 @@ const readTextFile = function(file,callback) {
 readTextFile("/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
 const mapArray = document.getElementById("maps");
-
+// ----------------- mapdetails ----------------- //
+const mapDetails = {
+  name: document.getElementById("mapname"),
+  display: document.getElementById("mapdisplay"),
+  detail: document.getElementById("mapdetail")
+};
 // ----------------end of initilization-------------------- //
 
 const tab = function(tab) {
@@ -58,6 +63,7 @@ const loadMaps = function() {
     let map = document.createElement("div");
     map.classList.add("mapselect");
     map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
+    map.style.backgroundSize = "cover";
     let mapName = document.createElement("div");
     mapName.classList.add("mapname");
     mapName.textContent = basic.maps[i]["Name"];
@@ -70,6 +76,17 @@ const loadMaps = function() {
     mapLength.classList.add("maplength");
     mapLength.textContent = calcDistance(basic.maps[i]).toFixed(1)+" km";
     map.appendChild(mapLength);
+    map.onclick = function() {
+      orienteering.course = basic.maps[i]["Name"];
+      orienteering.difficulty = basic.maps[i]["Difficulty"];
+      orienteering.distance = calcDistance(basic.maps[i]);
+      orienteering.controls = basic.maps[i]["Controls"];
+      orienteering.currentControl = 0;
+      mapDetails.name.textContent = orienteering.course;
+      mapDetails.display.src = basic.maps[i]["Map"];
+      mapDetails.detail.innerHTML = "";
+      tab(3);
+    };
     mapArray.appendChild(map);
   }
 };

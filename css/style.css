@@ -50,6 +50,7 @@ html,body {
   height: 100vh;
   width:100vw;
   text-align:center;
+  overflow-y:auto;
   /* color:var(--color); */
 }
 .container h1 {
@@ -82,8 +83,15 @@ html,body {
   display:block;
   margin:20px auto;
 }
+.mainPageAlt {
+  width:calc(50% - 2em);
+  background:linear-gradient(-200deg, var(--c2),var(--c1));
+  display:block;
+  margin:20px auto;
+}
 .tab {
   display:none;
+  padding-bottom:30px;
 }
 #box {
   margin:30px auto;
@@ -125,11 +133,10 @@ html,body {
   border-radius:30px;
   margin:25px;
   box-shadow: 0px 0px 30px 0.2px var(--colorIn);
-  background-size:cover;
   transition: 0.2s;
 }
 .mapselect:hover {
-  box-shadow: 0px 0px 30px 0.2px var(--color);
+  box-shadow: 0px 0px 30px 0.2px var(--c2);
   opacity:0.8;
   cursor:pointer;
 }
@@ -165,4 +172,18 @@ html,body {
   transform:translateX(-50%);
   border-radius: 10px;
   opacity:0.5;
+}
+#mapdisplay {
+  margin:10px auto;
+  width:50vw;
+  height:auto;
+  border-radius:20px;
+  transition:0.2s;
+  cursor:pointer;
+}
+#mapdisplay:hover {
+  opacity:0.8;
+}
+#mapdetail {
+  display:none;
 }
