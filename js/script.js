@@ -1,5 +1,5 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
-//Created Entirely from scratch by Dominik Honzak, no AI was used nor any other 3rd party tools to write the code.//
+//Created Entirely from scratch by Dominik Honzak//
 const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"]
@@ -144,9 +144,14 @@ const showPosition = function(position) {
   }
 };
 const getPosition = function(position) {
-  let current = position.coords.latitude.toFixed(4) + "," + position.coords.longitude.toFixed(4);
-  let target = parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[0]).toFixed(4) + "," + parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[1]).toFixed(4);
-  if (position.coords.accuracy <= 15 && current == target) {
+  let currentLat = position.coords.latitude.toFixed(4); 
+  let currentLong = position.coords.longitude.toFixed(4); 
+  
+  let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(4)); 
+  
+  let withinAccuracy = Math.abs(currentLat - targetLat) <= 0.0005 && Math.abs(currentLong - targetLong) <= 0.0005; 
+  
+  if (position.coords.accuracy <= 15 && withinAccuracy) {
     //success
     orienteering["Controls"].push({ "Control": target, "Timestamp": new Date().getTime() });
     if (orienteering["currentControl"] == 0) {
