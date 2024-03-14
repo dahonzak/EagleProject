@@ -46,6 +46,7 @@ const mapDetails = {
   detail: document.getElementById("mapdetail")
 };
 const course = document.getElementById('course');
+const testing = document.getElementById('testing');
 // ----------------end of initilization-------------------- //
 
 const tab = function(tab) {
@@ -167,6 +168,7 @@ const getPosition = function(position) {
     },3500);
   }
   else {
+    testing.textContent = ("Off by lat+-"+Math.abs(currentLat - targetLat)+" long+-"+Math.abs(currentLong - targetLong));
     tab(8);
     setTimeout(function() {
       tab(6);
