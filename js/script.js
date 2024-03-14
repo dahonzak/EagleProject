@@ -1,3 +1,5 @@
+// ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
+//Created Entirely from scratch by Dominik Honzak, no AI was used nor any other 3rd party tools to write the code.//
 const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"]
@@ -16,9 +18,12 @@ const orienteering = JSON.parse(`{
   "currentControl":0,
   "currentMap":"",
   "cords":[],
+  "cordstime":[],
   "avgAccuracy":[],
   "mapstarted":false,
-  "elevation":[]
+  "elevation":[],
+  "starttime":0,
+  "endtime":0
 }`);
 const readTextFile = function(file,callback) {
     var rawFile = new XMLHttpRequest();
@@ -52,13 +57,12 @@ const tab = function(tab) {
 };
 const calcDistance = function(map) {
   let distance = 0.0;
-  // alert(map["Controls"]);
-  for (let i = 0; i < map["Controls"].length; i++) {
+  for (let i = 0; i < map.length; i++) {
     if (i > 0) {
-      let lat1 = toRad(map["Controls"][i].split(",")[0]);
-      let lon1 = toRad(map["Controls"][i].split(",")[1]);
-      let lat2 = toRad(map["Controls"][i-1].split(",")[0]);
-      let lon2 = toRad(map["Controls"][i-1].split(",")[1]);
+      let lat1 = toRad(map[i].split(",")[0]);
+      let lon1 = toRad(map[i].split(",")[1]);
+      let lat2 = toRad(map[i-1].split(",")[0]);
+      let lon2 = toRad(map[i-1].split(",")[1]);
       distance += (Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*6371);
     }
   }
@@ -83,12 +87,12 @@ const loadMaps = function() {
     map.appendChild(mapDiff);
     let mapLength = document.createElement("div");
     mapLength.classList.add("maplength");
-    mapLength.textContent = calcDistance(basic.maps[i]).toFixed(1)+" km";
+    mapLength.textContent = calcDistance(basic.maps[i]["Controls"]).toFixed(1)+" km";
     map.appendChild(mapLength);
     map.onclick = function() {
       orienteering["course"] = basic.maps[i]["Name"];
       orienteering["difficulty"] = basic.maps[i]["Difficulty"];
-      orienteering["length"] = calcDistance(basic.maps[i]);
+      orienteering["length"] = calcDistance(basic.maps[i]["Controls"]);
       orienteering["Controls"] = basic.maps[i]["Controls"];
       orienteering["currentControl"] = 0;
       orienteering["currentMap"] = basic.maps[i]["Map"];
@@ -126,6 +130,7 @@ const showPosition = function(position) {
   if (orienteering["mapstarted"]) {
     orienteering["avgAccuracy"].push(position.coords.accuracy);
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
+    orienteering["cordstime"].push(new Date().getTime());
     orienteering["distance"] = calcDistance(orienteering["cords"]);
     orienteering["elevation"].push(position.coords.altitude);
     updateCourseInfo();
@@ -143,7 +148,7 @@ const getPosition = function(position) {
   let target = parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[0]).toFixed(4) + "," + parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[1]).toFixed(4);
   if (position.coords.accuracy <= 15 && current == target) {
     //success
-    orienteering["Controls"].push({ "Control": target, "Timestamp": position.timestamp });
+    orienteering["Controls"].push({ "Control": target, "Timestamp": new Date().getTime() });
     if (orienteering["currentControl"] == 0) {
       startCourse();
     }
@@ -151,7 +156,16 @@ const getPosition = function(position) {
       endCourse();
     }
     orienteering["currentControl"]++;
-    
+    tab(7);
+    setTimeout(function() {
+      tab(6);
+    },3500);
+  }
+  else {
+    tab(8);
+    setTimeout(function() {
+      tab(6);
+    },3500);
   }
 };
 const showError = function(error) {
@@ -191,11 +205,14 @@ const startCourse = function() {
   orienteering["currentControl"] = 0;
   orienteering["distance"] = 0;
   orienteering["time"] = 0;
+  orienteering["elevation"] = [];
+  orienteering["starttime"] = new Date().getTime();
   // create a localstorage item to store the course and data
   //opens course timer and starts course with time stamps
 };
 const endCourse = function() {
   orienteering["mapstarted"] = false;
+  orienteering["endtime"] = new Date().getTime();
   //ends course and calculates time and accuracy then dislays the information on the screen
 };
 const repeating = function() {
@@ -203,6 +220,7 @@ const repeating = function() {
   localStorage.setItem("Course",JSON.stringify(orienteering)); 
 }
 const loadCourse = function() {
+  course.innerHTML = "<h1>" + orienteering["course"] + "</h1><h2>Controls: " + (orienteering["Controls"].length-2) +" | Distance: " + orienteering["length"].toFixed(1) + " km | Difficulty: " + basic.colors[orienteering["difficulty"]].toUpperCase() + "</h2>";
   let control = document.createElement('div');
   control.classList.add("control");
   control.textContent = "Start";

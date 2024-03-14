@@ -205,3 +205,23 @@ html,body {
 .distance {
   
 }
+.circle {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:var(--colorIn);
+  color:var(--color);
+  width:50vh;
+  height:50vh;
+  border-radius:100%;
+  line-height:50vh;
+  text-align:center;
+  font-size:25vh;
+}
+.lime {
+  color:lime;
+}
+.red {
+  color:red;
+}
