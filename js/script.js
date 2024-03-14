@@ -255,7 +255,7 @@ const updateCourseInfo = function() {
   document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"]+1;
   document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
 };
-setInterval(repeating,1000);
+setInterval(repeating,5000);
 
 
 // -------------load in stuff------------ //
