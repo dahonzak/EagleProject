@@ -12,7 +12,7 @@ const orienteering = JSON.parse(`{
   "distance":0,
   "length":0,
   "time":0,
-  "controls":[],
+  "Controls":[],
   "currentControl":0,
   "currentMap":"",
   "cords":[],
@@ -40,6 +40,7 @@ const mapDetails = {
   display: document.getElementById("mapdisplay"),
   detail: document.getElementById("mapdetail")
 };
+const course = document.getElementById('course');
 // ----------------end of initilization-------------------- //
 
 const tab = function(tab) {
@@ -51,6 +52,7 @@ const tab = function(tab) {
 };
 const calcDistance = function(map) {
   let distance = 0.0;
+  // alert(map["Controls"]);
   for (let i = 0; i < map["Controls"].length; i++) {
     if (i > 0) {
       let lat1 = toRad(map["Controls"][i].split(",")[0]);
@@ -87,7 +89,7 @@ const loadMaps = function() {
       orienteering["course"] = basic.maps[i]["Name"];
       orienteering["difficulty"] = basic.maps[i]["Difficulty"];
       orienteering["length"] = calcDistance(basic.maps[i]);
-      orienteering["controls"] = basic.maps[i]["Controls"];
+      orienteering["Controls"] = basic.maps[i]["Controls"];
       orienteering["currentControl"] = 0;
       orienteering["currentMap"] = basic.maps[i]["Map"];
       orienteering["courseindex"] = i;
@@ -126,6 +128,8 @@ const showPosition = function(position) {
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
     orienteering["distance"] = calcDistance(orienteering["cords"]);
     orienteering["elevation"].push(position.coords.altitude);
+    updateCourseInfo();
+    orienteering["time"]++;
   }
   if (position.coords.accuracy >= 15) {
     footer.style.background = "red";
@@ -136,10 +140,10 @@ const showPosition = function(position) {
 };
 const getPosition = function(position) {
   let current = position.coords.latitude.toFixed(4) + "," + position.coords.longitude.toFixed(4);
-  let target = basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[0].toFixed(4) + "," + basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[1].toFixed(4);
-  if (orienteering["mapstarted"] && position.coords.accuracy <= 15 && current == target) {
+  let target = parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[0]).toFixed(4) + "," + parseFloat(basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[1]).toFixed(4);
+  if (position.coords.accuracy <= 15 && current == target) {
     //success
-    orienteering["controls"].push({ "Control": target, "Timestamp": position.timestamp });
+    orienteering["Controls"].push({ "Control": target, "Timestamp": position.timestamp });
     if (orienteering["currentControl"] == 0) {
       startCourse();
     }
@@ -176,6 +180,10 @@ const checkLocation = function() {
     navigator.geolocation.getCurrentPosition(getPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
   }
 };
+const resumeCourse = function() {
+  orienteering = JSON.parse(localStorage.getItem("Course"));
+  
+};
 const startCourse = function() {
   orienteering["cords"] = [];
   orienteering["avgAccuracy"] = [];
@@ -183,21 +191,47 @@ const startCourse = function() {
   orienteering["currentControl"] = 0;
   orienteering["distance"] = 0;
   orienteering["time"] = 0;
-  localStorage.setItem("Course",orienteering); // create a localstorage item to store the course and data
+  // create a localstorage item to store the course and data
   //opens course timer and starts course with time stamps
 };
 const endCourse = function() {
   orienteering["mapstarted"] = false;
-  
   //ends course and calculates time and accuracy then dislays the information on the screen
 };
 const repeating = function() {
   getLocation();
-  orienteering["distance"] = calcDistance(orienteering["cords"]);
+  localStorage.setItem("Course",JSON.stringify(orienteering)); 
 }
-setInterval(getLocation,1000);
+const loadCourse = function() {
+  let control = document.createElement('div');
+  control.classList.add("control");
+  control.textContent = "Start";
+  course.appendChild(control);
+  let time = document.createElement('h1');
+  time.classList.add("time");
+  time.textContent = "00:00";
+  course.appendChild(time);
+  let distance = document.createElement('div');
+  distance.classList.add("distance");
+  distance.textContent = "0.0 km";
+  course.appendChild(distance);
+  let confirmbtn = document.createElement('div');
+  confirmbtn.classList.add("button","mainPageBtn");
+  confirmbtn.textContent = "Confirm";
+  confirmbtn.onclick = function() {checkLocation();};
+  course.appendChild(confirmbtn);
+  
+};
+const updateCourseInfo = function() {
+  let cc = orienteering["time"];
+  let cc1 = parseInt(cc%60);
+  if (cc1 <= 9) {cc1 = "0" + cc1;}
+  document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
+  document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"]+1;
+  document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
+};
+setInterval(repeating,1000);
 
 
 // -------------load in stuff------------ //
-
 

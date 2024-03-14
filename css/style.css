@@ -189,3 +189,19 @@ html,body {
 #mapdetail {
   display:none;
 }
+/* --------------course------------- */
+.control {
+  font-size:65px;
+  background:var(--c2);
+  color:var(--color);
+  width:50vw;
+  display:block;
+  margin:20px auto;
+  border-radius:20px;
+}
+.time {
+  
+}
+.distance {
+  
+}
