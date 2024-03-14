@@ -36,7 +36,7 @@ const readTextFile = function(file,callback) {
     }
     rawFile.send(null);
 };
-readTextFile("/json/maps.json",function(responseText) {
+readTextFile("/EagleProject/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
 const mapArray = document.getElementById("maps");
 // ----------------- mapdetails ----------------- //
