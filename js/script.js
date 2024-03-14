@@ -5,14 +5,21 @@ const basic = {
 const page = {
   tab:0
 };
-const orienteering = {
-  course:"",
-  difficulty:0,
-  distance:0,
-  time:0,
-  controls:[], //{"Control":"s6df57asdf6","Timestamp":0}
-  currentControl:0
-};
+const orienteering = JSON.parse(`{
+  "course":"",
+  "courseindex":null,
+  "difficulty":0,
+  "distance":0,
+  "length":0,
+  "time":0,
+  "controls":[],
+  "currentControl":0,
+  "currentMap":"",
+  "cords":[],
+  "avgAccuracy":[],
+  "mapstarted":false,
+  "elevation":[]
+}`);
 const readTextFile = function(file,callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -77,12 +84,14 @@ const loadMaps = function() {
     mapLength.textContent = calcDistance(basic.maps[i]).toFixed(1)+" km";
     map.appendChild(mapLength);
     map.onclick = function() {
-      orienteering.course = basic.maps[i]["Name"];
-      orienteering.difficulty = basic.maps[i]["Difficulty"];
-      orienteering.distance = calcDistance(basic.maps[i]);
-      orienteering.controls = basic.maps[i]["Controls"];
-      orienteering.currentControl = 0;
-      mapDetails.name.textContent = orienteering.course;
+      orienteering["course"] = basic.maps[i]["Name"];
+      orienteering["difficulty"] = basic.maps[i]["Difficulty"];
+      orienteering["length"] = calcDistance(basic.maps[i]);
+      orienteering["controls"] = basic.maps[i]["Controls"];
+      orienteering["currentControl"] = 0;
+      orienteering["currentMap"] = basic.maps[i]["Map"];
+      orienteering["courseindex"] = i;
+      mapDetails.name.textContent = orienteering["course"];
       mapDetails.display.src = basic.maps[i]["Map"];
       mapDetails.detail.innerHTML = "";
       tab(3);
@@ -93,8 +102,8 @@ const loadMaps = function() {
 const loadMap = function(map) {
   // load page where you can download and share map as well as start the course
 };
-const downloadMap = async function(map) {
-  const image = await fetch(map);
+const downloadMap = async function() {
+  const image = await fetch(orienteering["currentMap"]);
   const imageBlog = await image.blob();
   const imageURL = URL.createObjectURL(imageBlog);
   const link = document.createElement('a')
@@ -104,14 +113,41 @@ const downloadMap = async function(map) {
   link.click();
   document.body.removeChild(link);
 };
+const printMap = function() {
+  let popup = window.open(orienteering["currentMap"],"_blank");
+  popup.focus();
+  popup.print();
+};
 const showPosition = function(position) {
   const footer = document.getElementsByClassName("footer")[0];
   footer.textContent = " Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
-  if (position.coords.accuracy >= 50) {
+  if (orienteering["mapstarted"]) {
+    orienteering["avgAccuracy"].push(position.coords.accuracy);
+    orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
+    orienteering["distance"] = calcDistance(orienteering["cords"]);
+    orienteering["elevation"].push(position.coords.altitude);
+  }
+  if (position.coords.accuracy >= 15) {
     footer.style.background = "red";
   }
   else {
     footer.style.background = "var(--colorIn)";
+  }
+};
+const getPosition = function(position) {
+  let current = position.coords.latitude.toFixed(4) + "," + position.coords.longitude.toFixed(4);
+  let target = basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[0].toFixed(4) + "," + basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]].split(",")[1].toFixed(4);
+  if (orienteering["mapstarted"] && position.coords.accuracy <= 15 && current == target) {
+    //success
+    orienteering["controls"].push({ "Control": target, "Timestamp": position.timestamp });
+    if (orienteering["currentControl"] == 0) {
+      startCourse();
+    }
+    else if (orienteering["currentControl"] == basic.maps[orienteering["courseindex"]]["Controls"].length-1) {
+      endCourse();
+    }
+    orienteering["currentControl"]++;
+    
   }
 };
 const showError = function(error) {
@@ -135,9 +171,30 @@ const getLocation = function() {
     navigator.geolocation.getCurrentPosition(showPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
   }
 };
+const checkLocation = function() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(getPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
+  }
+};
 const startCourse = function() {
+  orienteering["cords"] = [];
+  orienteering["avgAccuracy"] = [];
+  orienteering["mapstarted"] = true;
+  orienteering["currentControl"] = 0;
+  orienteering["distance"] = 0;
+  orienteering["time"] = 0;
+  localStorage.setItem("Course",orienteering); // create a localstorage item to store the course and data
   //opens course timer and starts course with time stamps
 };
+const endCourse = function() {
+  orienteering["mapstarted"] = false;
+  
+  //ends course and calculates time and accuracy then dislays the information on the screen
+};
+const repeating = function() {
+  getLocation();
+  orienteering["distance"] = calcDistance(orienteering["cords"]);
+}
 setInterval(getLocation,1000);
 
 

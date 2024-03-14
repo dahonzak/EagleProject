@@ -85,7 +85,8 @@ html,body {
 }
 .mainPageAlt {
   width:calc(50% - 2em);
-  background:linear-gradient(-200deg, var(--c2),var(--c1));
+  /* background:linear-gradient(-200deg, var(--c2),var(--c1));*/
+  background:var(--bg_overlay);
   display:block;
   margin:20px auto;
 }
@@ -180,6 +181,7 @@ html,body {
   border-radius:20px;
   transition:0.2s;
   cursor:pointer;
+  box-shadow: 0px 0px 30px 0.2px var(--c2);
 }
 #mapdisplay:hover {
   opacity:0.8;
