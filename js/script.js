@@ -134,8 +134,6 @@ const showPosition = function(position) {
     orienteering["cordstime"].push(new Date().getTime());
     orienteering["distance"] = calcDistance(orienteering["cords"]);
     orienteering["elevation"].push(position.coords.altitude);
-    updateCourseInfo();
-    orienteering["time"]++;
   }
   if (position.coords.accuracy >= 15) {
     footer.style.background = "red";
@@ -214,6 +212,10 @@ const startCourse = function() {
   orienteering["time"] = 0;
   orienteering["elevation"] = [];
   orienteering["starttime"] = new Date().getTime();
+  setInterval(function(){
+    updateCourseInfo();
+    orienteering["time"]++;
+  },1000);
   // create a localstorage item to store the course and data
   //opens course timer and starts course with time stamps
 };
