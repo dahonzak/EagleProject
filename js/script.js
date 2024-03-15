@@ -36,7 +36,7 @@ const readTextFile = function(file,callback) {
     }
     rawFile.send(null);
 };
-readTextFile("/EagleProject/json/maps.json",function(responseText) {
+readTextFile("/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
 const mapArray = document.getElementById("maps");
 // ----------------- mapdetails ----------------- //
@@ -154,7 +154,7 @@ const getPosition = function(position) {
   
   if (position.coords.accuracy <= 15 && withinAccuracy) {
     //success
-    orienteering["Controls"].push({ "Control": target, "Timestamp": new Date().getTime() });
+    orienteering["Controls"].push({ "Control": targetLat+","+targetLong, "Timestamp": new Date().getTime() });
     if (orienteering["currentControl"] == 0) {
       startCourse();
     }
@@ -169,6 +169,7 @@ const getPosition = function(position) {
   }
   else {
     testing.textContent = ("Off by lat+-"+Math.abs(currentLat - targetLat)+" long+-"+Math.abs(currentLong - targetLong));
+    alert(currentLat+", "+currentLong);
     tab(8);
     setTimeout(function() {
       tab(6);

@@ -7,7 +7,7 @@
 }
 :root {
   /* Background */
-  --bg: url("/EagleProject/images/bg.png") no-repeat fixed center center;
+  --bg: url("/images/bg.png") no-repeat fixed center center;
   --bg_overlay:rgba(0,0,0,0.85);
   --color:white;
   --colorIn:black;
