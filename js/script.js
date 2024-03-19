@@ -257,7 +257,7 @@ const updateCourseInfo = function() {
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
-  document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"]+1;
+  document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"];
   document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
 };
 setInterval(repeating,5000);
