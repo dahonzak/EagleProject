@@ -2,7 +2,8 @@
 //Created Entirely from scratch by Dominik Honzak//
 const basic = {
   maps:null,
-  colors:["white","yellow","orange","brown","green","red","blue"]
+  colors:["white","yellow","orange","brown","green","red","blue"],
+  navcon:true
 };
 const page = {
   tab:0
@@ -150,9 +151,9 @@ const getPosition = function(position) {
   let accuracy = 0.0005;
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
   
-  if (position.coords.accuracy <= 15 && withinAccuracy) {
+  if (withinAccuracy) { //position.coords.accuracy <= 15 &&
     //success
-    orienteering["Controls"].push({ "Control": target, "Timestamp": new Date().getTime() });
+    orienteering["Controls"].push({ "Control": targetLat+","+targetLong, "Timestamp": new Date().getTime() });
     if (orienteering["currentControl"] == 0) {
       startCourse();
     }
@@ -172,6 +173,7 @@ const getPosition = function(position) {
       tab(6);
     },3500);
   }
+  basic.navcon = true;
 };
 const showError = function(error) {
   switch(error.code) {
@@ -195,7 +197,8 @@ const getLocation = function() {
   }
 };
 const checkLocation = function() {
-  if (navigator.geolocation) {
+  if (navigator.geolocation && basic.navcon) {
+    basic.navcon = false;
     navigator.geolocation.getCurrentPosition(getPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
   }
 };
