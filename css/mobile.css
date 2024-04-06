@@ -13,4 +13,8 @@
     padding:0;
     margin:0;
   }
+  #courseDifficulty_on {
+    width:25px;
+    height:25px;
+  }
 }

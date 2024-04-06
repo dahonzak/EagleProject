@@ -1,5 +1,7 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
+const replaceGit = "/EagleProject"; /* /EagleProject 
+*/
 const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"],
@@ -37,7 +39,7 @@ const readTextFile = function(file,callback) {
     }
     rawFile.send(null);
 };
-readTextFile("/EagleProject/json/maps.json",function(responseText) {
+readTextFile(replaceGit+"/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
 const mapArray = document.getElementById("maps");
 // ----------------- mapdetails ----------------- //
@@ -128,7 +130,7 @@ const printMap = function() {
 };
 const showPosition = function(position) {
   const footer = document.getElementsByClassName("footer")[0];
-  footer.textContent = " Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
+  footer.textContent = "Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
   if (orienteering["mapstarted"]) {
     orienteering["avgAccuracy"].push(position.coords.accuracy);
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
@@ -232,25 +234,13 @@ const repeating = function() {
   localStorage.setItem("Course",JSON.stringify(orienteering)); 
 }
 const loadCourse = function() {
-  course.innerHTML = "<h1>" + orienteering["course"] + "</h1><h2>Controls: " + (orienteering["Controls"].length-2) +" | Distance: " + orienteering["length"].toFixed(1) + " km | Difficulty: " + basic.colors[orienteering["difficulty"]].toUpperCase() + "</h2>";
-  let control = document.createElement('div');
-  control.classList.add("control");
-  control.textContent = "Start";
-  course.appendChild(control);
-  let time = document.createElement('h1');
-  time.classList.add("time");
-  time.textContent = "00:00";
-  course.appendChild(time);
-  let distance = document.createElement('div');
-  distance.classList.add("distance");
-  distance.textContent = "0.0 km";
-  course.appendChild(distance);
-  let confirmbtn = document.createElement('div');
-  confirmbtn.classList.add("button","mainPageBtn");
-  confirmbtn.textContent = "Confirm";
-  confirmbtn.onclick = function() {checkLocation();};
-  course.appendChild(confirmbtn);
-  
+   document.getElementById("courseName_on").textContent = orienteering["course"];
+  document.getElementById("courseControlLength_on").textContent = (orienteering["Controls"].length-2);
+  document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
+  document.getElementById("courseDifficulty_on").style.background = basic.colors[orienteering["difficulty"]];
+};
+const openOptions = function() {
+  tab(9);
 };
 const updateCourseInfo = function() {
   let cc = orienteering["time"];

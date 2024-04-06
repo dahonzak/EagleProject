@@ -10,6 +10,7 @@
   <link rel="icon" type="image/x-icon" href="/EagleProject/images/icon.png" >
   <link href="css/style.css" rel="stylesheet" type="text/css" />
     <link href="css/mobile.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -60,7 +61,24 @@
     </div>
     <!-- 6 -->
     <div class='tab' id='course'>
-      
+      <h1 id='courseName_on'></h1>
+      <table id='courseTable_on'>
+        <tr>
+          <th>Controls</th>
+          <th>Distance</th>
+        </tr>
+        <tr>
+          <td><span id='courseControlLength_on'>--</span></td>
+          <td><span id='courseDistance_on'>0.0km</span></td>
+        </tr>
+      </table>
+      <div id='courseDifficulty_on'></div>
+      <div class='control'>Start</div>
+      <h1 class='time'>00:00</h1>
+      <div class='distance'>0.0 km</div>
+      <div class='button mainPageAlt' onclick="openOptions();"><i class='fa fa-gear'></i> Options</div>
+      <div class="button mainPageBtn" onclick="checkLocation();">Confirm</div>
+
       <!-- Course with timer and check location button -->
     </div>
     <!-- 7 -->
@@ -78,7 +96,13 @@
       <div class='circle red'>×</div>
       <!-- Course with timer and check location button -->
     </div>
-    
+    <!-- 9 -->
+    <div class='tab' id='course'>
+      <h1>Options</h1>
+      <div class='button mainPageBtn' onclick=''>Quit Course</div>
+      <div class='button mainPageBtn' onclick=''>Skip</div>
+      <div class='button mainPageAlt' onclick=''>Back</div>
+    </div>
     <div class="footer"></div>
   </div>
   <script src="js/script.js"></script>
