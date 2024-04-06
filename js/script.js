@@ -169,7 +169,7 @@ const getPosition = function(position) {
     },3500);
   }
   else {
-    testing.textContent = ("Off by lat+-"+Math.abs(currentLat - targetLat)+" long+-"+Math.abs(currentLong - targetLong));
+    testing.textContent = ("Off by lat &plusmn;"+Math.abs(currentLat - targetLat).toFixed(4)+" long &plusmn;"+Math.abs(currentLong - targetLong).toFixed(4));
     tab(8);
     setTimeout(function() {
       tab(6);
