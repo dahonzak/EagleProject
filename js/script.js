@@ -167,7 +167,7 @@ const getPosition = function(position) {
   let currentLong = position.coords.longitude.toFixed(4); 
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(4)); 
-  let accuracy = 0.0005;
+  let accuracy = 0.0002;
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
