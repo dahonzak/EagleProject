@@ -186,7 +186,7 @@ const getPosition = function(position) {
     },3500);
   }
   else {
-    testing.innerHTML = ("Off by lat ±"+Math.abs(currentLat - targetLat).toFixed(4)+" long ±"+Math.abs(currentLong - targetLong).toFixed(4));
+    testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4));
     tab(8);
     setTimeout(function() {
       tab(6);
