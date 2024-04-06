@@ -5,7 +5,13 @@ const replaceGit = "/EagleProject"; /* /EagleProject
 const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"],
-  navcon:true
+  navcon:true,
+  timer:null
+};
+let shareData = {
+  title: "Takoma Park Orienteering",
+  text: "",
+  url: document.URL,
 };
 const page = {
   tab:0
@@ -217,7 +223,7 @@ const startCourse = function() {
   orienteering["time"] = 0;
   orienteering["elevation"] = [];
   orienteering["starttime"] = new Date().getTime();
-  setInterval(function(){
+  basic.timer = setInterval(function(){
     updateCourseInfo();
     orienteering["time"]++;
   },1000);
@@ -225,8 +231,16 @@ const startCourse = function() {
   //opens course timer and starts course with time stamps
 };
 const endCourse = function() {
+  basic.timer = clearInterval(basic.timer);
   orienteering["mapstarted"] = false;
   orienteering["endtime"] = new Date().getTime();
+  tab(4);
+  let cc = (orienteering["endtime"]-orienteering["starttime"]/1000);
+  let cc1 = parseInt(cc%60);
+  if (cc1 <= 9) {cc1 = "0" + cc1;}
+  
+  shareData.text = "Finisher: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
+  
   //ends course and calculates time and accuracy then dislays the information on the screen
 };
 const repeating = function() {
@@ -247,7 +261,12 @@ const updateCourseInfo = function() {
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
-  document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"];
+  if (orienteering["currentControl"] == basic.maps[orienteering["courseindex"]]["Controls"].length-2) {
+    document.getElementsByClassName('control')[0].textContent = "Finish";
+  }
+  else {
+    document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"];
+  }
   document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
 };
 setInterval(repeating,5000);
@@ -255,3 +274,12 @@ setInterval(repeating,5000);
 
 // -------------load in stuff------------ //
 
+const sharebtn = document.getElementById("shareButton");
+sharebtn.addEventListener("click", async () => {
+  try {
+    await navigator.share(shareData);
+    sharebtn.textContent = "Shared!";
+  } catch (err) {
+    alert("error sharing");
+  }
+});
