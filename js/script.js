@@ -85,7 +85,12 @@ const loadMaps = function() {
   for (let i = 0; i < basic.maps.length; i++) {
     let map = document.createElement("div");
     map.classList.add("mapselect");
-    map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
+    if (!basic.maps[i]["Picture"]) {
+      map.style.background = "url("+replaceGit+"/images/icon.png)";
+    }
+    else {
+      map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
+    }
     map.style.backgroundSize = "cover";
     let mapName = document.createElement("div");
     mapName.classList.add("mapname");
@@ -108,7 +113,13 @@ const loadMaps = function() {
       orienteering["currentMap"] = basic.maps[i]["Map"];
       orienteering["courseindex"] = i;
       mapDetails.name.textContent = orienteering["course"];
-      mapDetails.display.src = basic.maps[i]["Map"];
+      if (!basic.maps[i]["Map"]) {
+        mapDetails.display.src = replaceGit+"/images/icon.png";
+      }
+      else {
+        mapDetails.display.src = basic.maps[i]["Map"];
+      }
+      
       mapDetails.detail.innerHTML = "";
       tab(3);
     };
@@ -239,7 +250,7 @@ const endCourse = function() {
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   
-  shareData.text = "Finisher: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
+  shareData.text = "Course: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
   
   //ends course and calculates time and accuracy then dislays the information on the screen
 };
