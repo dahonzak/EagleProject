@@ -251,7 +251,7 @@ const endCourse = function() {
   basic.timer = clearInterval(basic.timer);
   orienteering["mapstarted"] = false;
   orienteering["endtime"] = new Date().getTime();
-  let cc = (orienteering["endtime"]-orienteering["starttime"]/1000);
+  let cc = ((orienteering["endtime"]-orienteering["starttime"])/1000);
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   
