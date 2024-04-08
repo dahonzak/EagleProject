@@ -108,7 +108,7 @@ const loadMaps = function() {
       orienteering["course"] = basic.maps[i]["Name"];
       orienteering["difficulty"] = basic.maps[i]["Difficulty"];
       orienteering["length"] = calcDistance(basic.maps[i]["Controls"]);
-      orienteering["Controls"] = basic.maps[i]["Controls"];
+      // orienteering["Controls"] = basic.maps[i]["Controls"];
       orienteering["currentControl"] = 0;
       orienteering["currentMap"] = basic.maps[i]["Map"];
       orienteering["courseindex"] = i;
@@ -176,14 +176,19 @@ const getPosition = function(position) {
     if (orienteering["currentControl"] == 0) {
       startCourse();
     }
-    else if (orienteering["currentControl"] == basic.maps[orienteering["courseindex"]]["Controls"].length-1) {
+    else if (orienteering["currentControl"] == basic.maps[orienteering["courseindex"]]["Controls"].length - 1) {
       endCourse();
     }
     orienteering["currentControl"]++;
+    if (orienteering["currentControl"] < basic.maps[orienteering["courseindex"]]["Controls"].length) {
     tab(7);
     setTimeout(function() {
       tab(6);
     },3500);
+    }
+    else {
+      tab(4);
+    }
   }
   else { 
     testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4));
@@ -242,10 +247,10 @@ const startCourse = function() {
   //opens course timer and starts course with time stamps
 };
 const endCourse = function() {
+  tab(4);
   basic.timer = clearInterval(basic.timer);
   orienteering["mapstarted"] = false;
   orienteering["endtime"] = new Date().getTime();
-  tab(4);
   let cc = (orienteering["endtime"]-orienteering["starttime"]/1000);
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
@@ -260,7 +265,7 @@ const repeating = function() {
 }
 const loadCourse = function() {
    document.getElementById("courseName_on").textContent = orienteering["course"];
-  document.getElementById("courseControlLength_on").textContent = (orienteering["Controls"].length-2);
+  document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colors[orienteering["difficulty"]];
 };
@@ -272,7 +277,7 @@ const updateCourseInfo = function() {
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
-  if (orienteering["currentControl"] == basic.maps[orienteering["courseindex"]]["Controls"].length-2) {
+  if (orienteering["currentControl"] == (basic.maps[orienteering["courseindex"]]["Controls"].length - 1)) {
     document.getElementsByClassName('control')[0].textContent = "Finish";
   }
   else {
