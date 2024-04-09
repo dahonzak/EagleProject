@@ -1,0 +1,33 @@
+<style>/* reflection */
+.units > :last-child {
+  transform: rotatex(180deg) translatey(15px);
+  mask-image: linear-gradient(transparent 50%, white 90%);
+  -webkit-mask-image: linear-gradient(transparent 50%, white 90%);
+}
+/* original design */
+.units > * {
+  font: bolder 10rem/10rem "EB Garamond";
+  background-image: url("/images/icon.png");
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.units {
+  width: max-content;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  padding: 0 10px;
+  display: inline-block;
+  /* box-shadow: 0px 0px 10px 1px rgba(255,255,255,0.5); */
+}
+body {
+  background:black;
+  text-align: center;
+  margin-top: calc(50vh - 15rem);
+}</style>
+<div class='units'>
+    <div>404</div>
+    <div>404</div>
+  </div>
