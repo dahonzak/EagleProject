@@ -16,24 +16,8 @@ let shareData = {
 const page = {
   tab:0
 };
-const orienteering = JSON.parse(`{
-  "course":"",
-  "courseindex":null,
-  "difficulty":0,
-  "distance":0,
-  "length":0,
-  "time":0,
-  "Controls":[],
-  "currentControl":0,
-  "currentMap":"",
-  "cords":[],
-  "cordstime":[],
-  "avgAccuracy":[],
-  "mapstarted":false,
-  "elevation":[],
-  "starttime":0,
-  "endtime":0
-}`);
+let orienteering;
+ 
 const readTextFile = function(file,callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -45,8 +29,7 @@ const readTextFile = function(file,callback) {
     }
     rawFile.send(null);
 };
-readTextFile(replaceGit+"/json/maps.json",function(responseText) {
-basic.maps = JSON.parse(responseText)["Maps"];loadMaps();});
+
 const mapArray = document.getElementById("maps");
 // ----------------- mapdetails ----------------- //
 const mapDetails = {
@@ -81,6 +64,11 @@ const calcDistance = function(map) {
 const toRad = function(Value) {
     return Value * Math.PI / 180;
 };
+const newGame = function() {
+  localStorage.clear();
+  location.reload();
+};
+
 const loadMaps = function() {
   for (let i = 0; i < basic.maps.length; i++) {
     let map = document.createElement("div");
@@ -104,30 +92,26 @@ const loadMaps = function() {
     mapLength.classList.add("maplength");
     mapLength.textContent = calcDistance(basic.maps[i]["Controls"]).toFixed(1)+" km";
     map.appendChild(mapLength);
-    map.onclick = function() {
-      orienteering["course"] = basic.maps[i]["Name"];
-      orienteering["difficulty"] = basic.maps[i]["Difficulty"];
-      orienteering["length"] = calcDistance(basic.maps[i]["Controls"]);
-      // orienteering["Controls"] = basic.maps[i]["Controls"];
-      orienteering["currentControl"] = 0;
-      orienteering["currentMap"] = basic.maps[i]["Map"];
-      orienteering["courseindex"] = i;
-      mapDetails.name.textContent = orienteering["course"];
-      if (!basic.maps[i]["Map"]) {
-        mapDetails.display.src = replaceGit+"/images/icon.png";
-      }
-      else {
-        mapDetails.display.src = basic.maps[i]["Map"];
-      }
-      
-      mapDetails.detail.innerHTML = "";
-      tab(3);
-    };
+    map.onclick = function() {loadMap(i);orienteering["currentControl"] = 0;};
     mapArray.appendChild(map);
   }
 };
-const loadMap = function(map) {
-  // load page where you can download and share map as well as start the course
+const loadMap = function(i) {
+  orienteering["course"] = basic.maps[i]["Name"];
+  orienteering["difficulty"] = basic.maps[i]["Difficulty"];
+  orienteering["length"] = calcDistance(basic.maps[i]["Controls"]);
+  orienteering["currentMap"] = basic.maps[i]["Map"];
+  orienteering["courseindex"] = i;
+  mapDetails.name.textContent = orienteering["course"];
+  if (!basic.maps[i]["Map"]) {
+    mapDetails.display.src = replaceGit+"/images/icon.png";
+  }
+  else {
+    mapDetails.display.src = basic.maps[i]["Map"];
+  }
+
+  mapDetails.detail.innerHTML = "";
+  tab(3);
 };
 const downloadMap = async function() {
   const image = await fetch(orienteering["currentMap"]);
@@ -226,10 +210,7 @@ const checkLocation = function() {
     navigator.geolocation.getCurrentPosition(getPosition, showError,{ enableHighAccuracy: true, timeout: 10000, maximumAge: 0 });
   }
 };
-const resumeCourse = function() {
-  orienteering = JSON.parse(localStorage.getItem("Course"));
-  
-};
+
 const startCourse = function() {
   orienteering["cords"] = [];
   orienteering["avgAccuracy"] = [];
@@ -277,13 +258,18 @@ const updateCourseInfo = function() {
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
-  if (orienteering["currentControl"] == (basic.maps[orienteering["courseindex"]]["Controls"].length - 1)) {
+  if (orienteering["currentControl"] == 0) {
+    document.getElementsByClassName('control')[0].textContent = "Start";
+  }
+  else if (orienteering["currentControl"] == (basic.maps[orienteering["courseindex"]]["Controls"].length - 1)) {
     document.getElementsByClassName('control')[0].textContent = "Finish";
   }
   else {
     document.getElementsByClassName('control')[0].textContent = orienteering["currentControl"];
   }
-  document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
+  if (orienteering["distance"]) {
+    document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
+  }
 };
 setInterval(repeating,5000);
 
@@ -298,4 +284,42 @@ sharebtn.addEventListener("click", async () => {
   } catch (err) {
     alert("error sharing");
   }
+});
+
+const resumeCourse = function() {
+  tab(6);loadCourse();
+  basic.timer = setInterval(function(){
+    updateCourseInfo();
+    orienteering["time"]++;
+  },1000);
+};
+readTextFile(replaceGit+"/json/maps.json",function(responseText) {
+basic.maps = JSON.parse(responseText)["Maps"];
+  if (!(localStorage.getItem("Course") === null) && JSON.parse(localStorage.getItem("Course"))["course"]) {
+    orienteering = JSON.parse(localStorage.getItem("Course"));
+    loadMap(orienteering["courseindex"]);
+    resumeCourse();
+  }
+  else {
+    orienteering = JSON.parse(`{
+        "course":"",
+        "courseindex":null,
+        "difficulty":0,
+        "distance":0.0,
+        "length":0,
+        "time":0,
+        "Controls":[],
+        "currentControl":0,
+        "currentMap":"",
+        "cords":[],
+        "cordstime":[],
+        "avgAccuracy":[],
+        "mapstarted":false,
+        "elevation":[],
+        "starttime":0,
+        "endtime":0
+      }`);
+  }
+  loadMaps();
+
 });
