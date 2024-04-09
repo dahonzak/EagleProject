@@ -112,6 +112,7 @@ const loadMap = function(i) {
 
   mapDetails.detail.innerHTML = "";
   tab(3);
+  
 };
 const downloadMap = async function() {
   const image = await fetch(orienteering["currentMap"]);
@@ -132,7 +133,7 @@ const printMap = function() {
 const showPosition = function(position) {
   const footer = document.getElementsByClassName("footer")[0];
   footer.textContent = "Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
-  if (orienteering["mapstarted"]) {
+  if (orienteering.hasOwnProperty("mapstarted") && orienteering["mapstarted"]) {
     orienteering["avgAccuracy"].push(position.coords.accuracy);
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
     orienteering["cordstime"].push(new Date().getTime());
@@ -237,13 +238,16 @@ const endCourse = function() {
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   
   shareData.text = "Course: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
-  
+  localStorage.clear();
   //ends course and calculates time and accuracy then dislays the information on the screen
 };
 const repeating = function() {
   getLocation();
-  localStorage.setItem("Course",JSON.stringify(orienteering)); 
+  if (orienteering.hasOwnProperty("mapstarted") && orienteering["mapstarted"]) {
+localStorage.setItem("Course",JSON.stringify(orienteering)); 
+  }
 }
+setInterval(repeating,5000);
 const loadCourse = function() {
    document.getElementById("courseName_on").textContent = orienteering["course"];
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
@@ -271,7 +275,7 @@ const updateCourseInfo = function() {
     document.getElementsByClassName('distance')[0].textContent = orienteering["distance"].toFixed(1)+" km";
   }
 };
-setInterval(repeating,5000);
+
 
 
 // -------------load in stuff------------ //
@@ -295,10 +299,12 @@ const resumeCourse = function() {
 };
 readTextFile(replaceGit+"/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];
-  if (!(localStorage.getItem("Course") === null) && JSON.parse(localStorage.getItem("Course"))["course"]) {
+  if (!(localStorage.getItem("Course") === null)) {
+  if (JSON.parse(localStorage.getItem("Course"))["course"]) {
     orienteering = JSON.parse(localStorage.getItem("Course"));
     loadMap(orienteering["courseindex"]);
     resumeCourse();
+  }
   }
   else {
     orienteering = JSON.parse(`{
