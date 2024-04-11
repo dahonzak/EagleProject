@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&family=Rozha+One&display=swap');
+
+@import "ani.css";
+
 * {
   -ms-overflow-style: none;
   scrollbar-width: none; 
@@ -21,6 +24,14 @@ html,body {
   padding:0;
   overflow-x:hidden;
   color:var(--color);
+}
+button {
+  background:var(--colorIn);
+  color:var(--color);
+  padding:3px 10px;
+  border:none;
+  ouline:none;
+  border-radius:5px;
 }
 #bg {
   position:fixed;
@@ -93,6 +104,36 @@ html,body {
 .tab {
   display:none;
   padding-bottom:30px;
+}
+.textblock {
+  width:calc(100% - 40px);
+  margin:20px;
+  text-align:left;
+}
+.textblock h3 {
+  padding:20px 10px;
+  background:var(--c1);
+  color:var(--color);
+  margin:0;
+  border-radius: 10px;
+  transition:0.2s;
+}
+.textblock p1 {
+  margin:0;
+  padding:20px 10px;
+  background:var(--color);
+  color:var(--colorIn);
+  display:none;
+  border-radius: 0px 0px 10px 10px;
+  transition:0.2s;
+  animation: fadeIn 2s;
+}
+video {
+  display:block;
+  margin:40px auto;
+  border-radius:15px;
+  width:calc(100%);
+  height:auto;
 }
 #box {
   margin:30px auto;

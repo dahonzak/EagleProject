@@ -279,7 +279,16 @@ const updateCourseInfo = function() {
 
 
 // -------------load in stuff------------ //
-
+const dropdown = function(e) {
+ if (e.getElementsByTagName("p1")[0].style.display == "none") {
+   e.getElementsByTagName("p1")[0].style.display = "block";
+   e.getElementsByTagName("h3")[0].style.borderRadius = "10px 10px 0px 0px";
+ }
+ else {
+   e.getElementsByTagName("p1")[0].style.display = "none";
+   e.getElementsByTagName("h3")[0].style.borderRadius = "10px";
+ }
+};
 const sharebtn = document.getElementById("shareButton");
 sharebtn.addEventListener("click", async () => {
   try {
