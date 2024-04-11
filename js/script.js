@@ -71,7 +71,9 @@ const newGame = function() {
   localStorage.clear();
   location.reload();
 };
-
+const openMap = function() {
+  window.open(orienteering["currentMap"], '_blank');
+};
 const loadMaps = function() {
   for (let i = 0; i < basic.colors.length; i++) {
     let type = document.createElement("div");
