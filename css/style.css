@@ -30,8 +30,18 @@ button {
   color:var(--color);
   padding:3px 10px;
   border:none;
-  ouline:none;
+  outline:none;
   border-radius:5px;
+}
+.type {
+  /* opacity:0.7; */
+  color:var(--colorIn);
+  padding:10px 20px;
+  border:none;
+  outline:none;
+  border-radius:5px;
+  display:inline-block;
+  margin:10px;
 }
 #bg {
   position:fixed;

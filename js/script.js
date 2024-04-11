@@ -5,6 +5,8 @@ const replaceGit = "/EagleProject"; /* /EagleProject
 const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"],
+  colordef:["Easy","Normal","Intermediate","Advanced","Advanced Long","Expert","Expert Long"],
+  colorhue:["rgba(255,255,255,0.7)","rgba(247, 237, 47,0.7)","rgba(255, 153, 0,0.7)","rgba(92, 63, 34,0.7)","rgba(19, 191, 42,0.7)","rgba(209, 15, 15,0.7)","rgba(46, 125, 209,0.7)"],
   navcon:true,
   timer:null
 };
@@ -70,6 +72,13 @@ const newGame = function() {
 };
 
 const loadMaps = function() {
+  for (let i = 0; i < basic.colors.length; i++) {
+    let type = document.createElement("div");
+    type.classList.add("type");
+    type.style.background = basic.colorhue[i];
+    type.innerHTML = basic.colors[i].charAt(0).toUpperCase() + basic.colors[i].slice(1) + " (" + basic.colordef[i] + ")";
+    mapArray.appendChild(type);
+  }
   for (let i = 0; i < basic.maps.length; i++) {
     let map = document.createElement("div");
     map.classList.add("mapselect");
@@ -86,7 +95,7 @@ const loadMaps = function() {
     map.appendChild(mapName);
     let mapDiff = document.createElement("div");
     mapDiff.classList.add("mapdiff");
-    mapDiff.style.background = basic.colors[basic.maps[i]["Difficulty"]];
+    mapDiff.style.background = basic.colorhue[basic.maps[i]["Difficulty"]];
     map.appendChild(mapDiff);
     let mapLength = document.createElement("div");
     mapLength.classList.add("maplength");
@@ -252,7 +261,7 @@ const loadCourse = function() {
    document.getElementById("courseName_on").textContent = orienteering["course"];
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
-  document.getElementById("courseDifficulty_on").style.background = basic.colors[orienteering["difficulty"]];
+  document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
 };
 const openOptions = function() {
   tab(9);
