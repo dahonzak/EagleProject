@@ -16,7 +16,8 @@ let shareData = {
   url: document.URL,
 };
 const page = {
-  tab:0
+  tab:0,
+  blur:false
 };
 let orienteering;
  
@@ -307,9 +308,15 @@ sharebtn.addEventListener("click", async () => {
     alert("error sharing");
   }
 });
-
+const pauseCourse = function() {
+  if (basic.timer) {
+    clearInterval(basic.timer);
+    basic.timer = null;
+  }
+};
 const resumeCourse = function() {
   tab(6);loadCourse();
+  orienteering["time"] = orienteering["starttime"] - new Date().getTime();
   basic.timer = setInterval(function(){
     updateCourseInfo();
     orienteering["time"]++;
@@ -347,3 +354,14 @@ basic.maps = JSON.parse(responseText)["Maps"];
   loadMaps();
 
 });
+window.addEventListener("focus", function(event) 
+{ 
+  if (page.blur) {
+    resumeCourse();
+    page.blur = false;
+  }
+}, false);
+window.addEventListener("blur", function(event) { 
+  pauseCourse();
+  page.blur = true;
+}, false);
