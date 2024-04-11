@@ -6,7 +6,7 @@ const basic = {
   maps:null,
   colors:["white","yellow","orange","brown","green","red","blue"],
   colordef:["Easy","Normal","Intermediate","Advanced","Advanced Long","Expert","Expert Long"],
-  colorhue:["rgba(255,255,255,0.7)","rgba(247, 237, 47,0.7)","rgba(255, 153, 0,0.7)","rgba(92, 63, 34,0.7)","rgba(19, 191, 42,0.7)","rgba(209, 15, 15,0.7)","rgba(46, 125, 209,0.7)"],
+  colorhue:["rgb(255,255,255)","rgb(247, 237, 47)","rgb(255, 153, 0)","rgb(92, 63, 34)","rgb(19, 191, 42)","rgb(209, 15, 15)","rgb(46, 125, 209)"],
   navcon:true,
   timer:null
 };
