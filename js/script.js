@@ -75,13 +75,15 @@ const openMap = function() {
   window.open(orienteering["currentMap"], '_blank');
 };
 const loadMaps = function() {
+  let maplevels = document.createElement("div");
   for (let i = 0; i < basic.colors.length; i++) {
     let type = document.createElement("div");
     type.classList.add("type");
     type.style.background = basic.colorhue[i];
     type.innerHTML = basic.colors[i].charAt(0).toUpperCase() + basic.colors[i].slice(1) + " (" + basic.colordef[i] + ")";
-    mapArray.appendChild(type);
+    maplevels.appendChild(type);
   }
+  mapArray.appendChild(maplevels);
   for (let i = 0; i < basic.maps.length; i++) {
     let map = document.createElement("div");
     map.classList.add("mapselect");
