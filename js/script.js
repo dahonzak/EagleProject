@@ -199,16 +199,12 @@ const getPosition = function(position) {
 const showError = function(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-      // location.href='/error';
       break;
     case error.POSITION_UNAVAILABLE:
-      // location.href='/error';
       break;
     case error.TIMEOUT:
-      // location.href='/error';
       break;
     case error.UNKNOWN_ERROR:
-      // location.href='/error';
       break;
   }
 };
@@ -237,8 +233,6 @@ const startCourse = function() {
     updateCourseInfo();
     orienteering["time"]++;
   },1000);
-  // create a localstorage item to store the course and data
-  //opens course timer and starts course with time stamps
 };
 const endCourse = function() {
   tab(4);
@@ -251,7 +245,6 @@ const endCourse = function() {
   
   shareData.text = "Course: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
   localStorage.clear();
-  //ends course and calculates time and accuracy then dislays the information on the screen
 };
 const repeating = function() {
   getLocation();
