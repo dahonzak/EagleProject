@@ -364,3 +364,10 @@ window.addEventListener("blur", function(event) {
   pauseCourse();
   page.blur = true;
 }, false);
+navigator.permissions.query({ name: "geolocation" }).then((result) => {
+  if (result.state === "granted") {
+    //
+  } else if (result.state === "prompt") {
+    alert("There is an error loading location services. Please allow location services in your browser settings.");
+  }
+});
