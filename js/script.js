@@ -199,16 +199,16 @@ const getPosition = function(position) {
 const showError = function(error) {
   switch(error.code) {
     case error.PERMISSION_DENIED:
-      location.href='/error';
+      // location.href='/error';
       break;
     case error.POSITION_UNAVAILABLE:
-      location.href='/error';
+      // location.href='/error';
       break;
     case error.TIMEOUT:
-      location.href='/error';
+      // location.href='/error';
       break;
     case error.UNKNOWN_ERROR:
-      location.href='/error';
+      // location.href='/error';
       break;
   }
 };
