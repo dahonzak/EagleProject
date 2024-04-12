@@ -142,7 +142,7 @@ video {
   display:block;
   margin:40px auto;
   border-radius:15px;
-  width:calc(100%);
+  width:calc(50%);
   height:auto;
 }
 #box {
