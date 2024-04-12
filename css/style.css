@@ -276,6 +276,9 @@ video {
 .red {
   color:red;
 }
+.grey {
+  color:#bfbfbf;
+}
 #courseTable_on {
   border:none;
   width:100%;
@@ -303,4 +306,14 @@ video {
   border-radius:100%;
   width:50px;
   height:50px;
+}
+#perm {
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:calc(100% - 20px);
+  padding:10px;
+  background:var(--bg_overlay);
+  text-align: left;
 }

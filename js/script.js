@@ -1,5 +1,7 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
+
+
 const replaceGit = "/EagleProject"; /* /EagleProject 
 */
 const basic = {
@@ -209,6 +211,7 @@ const showError = function(error) {
     case error.UNKNOWN_ERROR:
       break;
   }
+  document.getElementById("perm").style.display = "block";
 };
 const getLocation = function() {
   if (navigator.geolocation) {
@@ -364,10 +367,30 @@ window.addEventListener("blur", function(event) {
   pauseCourse();
   page.blur = true;
 }, false);
-navigator.permissions.query({ name: "geolocation" }).then((result) => {
-  if (result.state === "granted") {
-    //
-  } else if (result.state === "prompt") {
-    alert("There is an error loading location services. Please allow location services in your browser settings.");
-  }
-});
+
+// navigator.permissions.query({ name: "geolocation" }).then((result) => {
+//   if (result.state === "granted") {}
+//   else if (result.state === "prompt") {}
+// });
+
+// const permissionsToRequest = {
+//   permissions: ["geolocation"],
+//   origins: [document.URL],
+// };
+
+// async function requestPermissions() {
+//   function onResponse(response) {
+//     if (response) {
+//       console.log("Permission was granted");
+//       document.getElementById("perm").style.display = "none";
+//     } else {
+//       console.log("Permission was refused");
+//     }
+//     return browser.permissions.getAll();
+//   }
+
+//   const response = await browser.permissions.request(permissionsToRequest);
+//   const currentPermissions = await onResponse(response);
+
+//   console.log(`Current permissions:`, currentPermissions);
+// };
