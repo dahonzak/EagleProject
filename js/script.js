@@ -317,12 +317,14 @@ const pauseCourse = function() {
   }
 };
 const resumeCourse = function() {
-  tab(6);loadCourse();
-  orienteering["time"] = orienteering["starttime"] - new Date().getTime();
-  basic.timer = setInterval(function(){
-    updateCourseInfo();
-    orienteering["time"]++;
-  },1000);
+  if (orienteering["mapstarted"]) {
+    tab(6);loadCourse();
+    orienteering["time"] = orienteering["starttime"] - new Date().getTime();
+    basic.timer = setInterval(function(){
+      updateCourseInfo();
+      orienteering["time"]++;
+    },1000);
+  }
 };
 readTextFile(replaceGit+"/json/maps.json",function(responseText) {
 basic.maps = JSON.parse(responseText)["Maps"];
