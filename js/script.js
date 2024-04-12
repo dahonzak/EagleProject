@@ -368,29 +368,3 @@ window.addEventListener("blur", function(event) {
   page.blur = true;
 }, false);
 
-// navigator.permissions.query({ name: "geolocation" }).then((result) => {
-//   if (result.state === "granted") {}
-//   else if (result.state === "prompt") {}
-// });
-
-// const permissionsToRequest = {
-//   permissions: ["geolocation"],
-//   origins: [document.URL],
-// };
-
-// async function requestPermissions() {
-//   function onResponse(response) {
-//     if (response) {
-//       console.log("Permission was granted");
-//       document.getElementById("perm").style.display = "none";
-//     } else {
-//       console.log("Permission was refused");
-//     }
-//     return browser.permissions.getAll();
-//   }
-
-//   const response = await browser.permissions.request(permissionsToRequest);
-//   const currentPermissions = await onResponse(response);
-
-//   console.log(`Current permissions:`, currentPermissions);
-// };
