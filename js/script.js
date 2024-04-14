@@ -168,7 +168,7 @@ const getPosition = function(position) {
   let currentLong = position.coords.longitude.toFixed(4); 
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(4)); 
-  let accuracy = 0.0002;
+  let accuracy = 0.0001;
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
@@ -317,7 +317,7 @@ const pauseCourse = function() {
 const resumeCourse = function() {
   if (orienteering["mapstarted"]) {
     tab(6);loadCourse();
-    orienteering["time"] = orienteering["starttime"] - new Date().getTime();
+    orienteering["time"] = new Date().getTime() - orienteering["starttime"];
     basic.timer = setInterval(function(){
       updateCourseInfo();
       orienteering["time"]++;
