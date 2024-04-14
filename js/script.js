@@ -317,7 +317,7 @@ const pauseCourse = function() {
 const resumeCourse = function() {
   if (orienteering["mapstarted"]) {
     tab(6);loadCourse();
-    orienteering["time"] = (new Date().getTime() - orienteering["cordstime"][orienteering["cordstime"].length-1])/1000;
+    orienteering["time"] = (new Date().getTime() - orienteering["starttime"])/1000;
     basic.timer = setInterval(function(){
       updateCourseInfo();
       orienteering["time"]++;
