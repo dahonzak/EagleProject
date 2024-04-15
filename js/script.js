@@ -286,6 +286,7 @@ const loadCourse = function() {
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
+  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. conditions such as weather may impact how dangerous a course is.");
 };
 const openOptions = function() {
   tab(9);
