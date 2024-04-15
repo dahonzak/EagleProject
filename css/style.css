@@ -315,4 +315,5 @@ video {
   padding:10px;
   background:var(--bg_overlay);
   text-align: left;
+  z-index:10;
 }

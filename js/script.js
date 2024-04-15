@@ -70,6 +70,28 @@ const calcDistance = function(map) {
 const toRad = function(Value) {
     return Value * Math.PI / 180;
 };
+const warning = function(h,p) {
+  if (!page.warning) {
+    page.warning = true;
+    let dis = document.createElement("div");
+    dis.classList.add("perm");
+    let header = document.createElement("h3");
+    header.textContent = h;
+    dis.appendChild(header);
+    let para = document.createElement("p");
+    para.innerHTML = p;
+    dis.appendChild(para);
+    let btn = document.createElement("div");
+    btn.classList.add("button");
+    btn.textContent = "Dismiss";
+    btn.onclick = function() {
+      dis.remove();
+      page.warning = false;
+    };
+    dis.appendChild(btn);
+    document.body.appendChild(dis);
+  }
+};
 const newGame = function() {
   localStorage.clear();
   location.reload();
@@ -387,27 +409,5 @@ const closeFullscreen = function() {
     document.webkitExitFullscreen();
   } else if (document.msExitFullscreen) { /* IE11 */
     document.msExitFullscreen();
-  }
-};
-const warning = function(h,p) {
-  if (!page.warning) {
-    page.warning = true;
-    let dis = document.createElement("div");
-    dis.classList.add("perm");
-    let header = document.createElement("h3");
-    header.textContent = h;
-    dis.appendChild(header);
-    let para = document.createElement("p");
-    para.innerHTML = p;
-    dis.appendChild(para);
-    let btn = document.createElement("div");
-    btn.classList.add("button");
-    btn.textContent = "Dismiss";
-    btn.onclick = function() {
-      dis.remove();
-      page.warning = false;
-    };
-    dis.appendChild(btn);
-    document.body.appendChild(dis);
   }
 };
