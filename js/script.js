@@ -403,10 +403,10 @@ const warning = function(h,p) {
     let btn = document.createElement("div");
     btn.classList.add("button");
     btn.textContent = "Dismiss";
-    btn.addEventListener("click",function() {
-      page.warning = false;
+    btn.onclick = function() {
       dis.remove();
-    });
+      page.warning = false;
+    };
     dis.appendChild(btn);
     document.body.appendChild(dis);
   }
