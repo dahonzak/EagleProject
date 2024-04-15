@@ -307,8 +307,7 @@ video {
   width:50px;
   height:50px;
 }
-#perm {
-  display:none;
+.perm {
   position:fixed;
   bottom:0;
   left:0;

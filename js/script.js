@@ -19,7 +19,8 @@ let shareData = {
 };
 const page = {
   tab:0,
-  blur:false
+  blur:false,
+  warning:false
 };
 let orienteering;
  
@@ -211,7 +212,7 @@ const showError = function(error) {
     case error.UNKNOWN_ERROR:
       break;
   }
-  document.getElementById("perm").style.display = "block";
+  warning("Location Request","Your device likely does not have location services enabled.</p><b class='grey'>IOS: </b>aA → Settings → Scroll Down → Location → Allow<br><b class='grey'>Android: </b>⋮ → Scroll Down → ⓘ → Permissions → Location → On");
 };
 const getLocation = function() {
   if (navigator.geolocation) {
@@ -368,7 +369,7 @@ window.addEventListener("blur", function(event) {
   page.blur = true;
 }, false);
 
-var elem = document.documentElement;
+let elem = document.documentElement;
 const openFullscreen = function() {
   if (elem.requestFullscreen) {
     elem.requestFullscreen();
@@ -386,5 +387,27 @@ const closeFullscreen = function() {
     document.webkitExitFullscreen();
   } else if (document.msExitFullscreen) { /* IE11 */
     document.msExitFullscreen();
+  }
+};
+const warning = function(h,p) {
+  if (!page.warning) {
+    page.warning = true;
+    let dis = document.createElement("div");
+    dis.classList.add("perm");
+    let header = document.createElement("h3");
+    header.textContent = h;
+    dis.appendChild(header);
+    let para = document.createElement("p");
+    para.innerHTML = p;
+    dis.appendChild(para);
+    let btn = document.createElement("div");
+    btn.classList.add("button");
+    btn.textContent = "Dismiss";
+    btn.addEventListener("click",function() {
+      page.warning = false;
+      dis.remove();
+    });
+    dis.appendChild(btn);
+    document.body.appendChild(dis);
   }
 };
