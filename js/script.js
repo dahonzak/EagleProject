@@ -71,7 +71,12 @@ const toRad = function(Value) {
     return Value * Math.PI / 180;
 };
 const warning = function(h,p) {
-  if (!page.warning) {
+  let currentW = "";
+  if (!(localStorage.getItem("Warnings") === null)) {
+    currentW = localStorage.getItem("Warnings");
+  }
+  if (!page.warning && !currentW.includes(h)) {
+    localStorage.setItem("Warnings",currentW+","+h);
     page.warning = true;
     let dis = document.createElement("div");
     dis.classList.add("perm");
