@@ -11,6 +11,9 @@
   *:focus {
       outline: none !important;
   }
+  :root {
+    --bg_overlay:rgba(0,0,0,0.65);
+  }
   .mainPageBtn, .mainPageAlt {
     width:calc(100% - 2em);
   }
