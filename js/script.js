@@ -204,6 +204,7 @@ const showPosition = function(position) {
     orienteering["cordstime"].push(new Date().getTime());
     orienteering["distance"] = calcDistance(orienteering["cords"]);
     orienteering["elevation"].push(position.coords.altitude);
+    hotCold(calcDistance([position.coords.latitude+", "+position.coords.longitude,orienteering["Controls"][orienteering["currentControl"]]]));
   }
   if (position.coords.accuracy >= 15) {
     footer.style.background = "red";
@@ -460,15 +461,18 @@ const closeFullscreen = function() {
      orienteering["bonustime"] += 120; // extra seconds
    }
  };
-const hotCold = function(acc) {
+const hotCold = function(dist) {
   if (basic.hotcold) {
     let rgb = {
       r:0,
       g:0,
       b:0
     };
-    if (acc >= 0.00) {
-      rgb.r = 255;
+    if (Math.round(dist) >= 255 && Math.round(dist) <= 510) {
+      rgb.b = 255 - Math.round(dist);
+    }
+    else if (Math.round(dist) <= 255) {
+      rgb.r = 255 - Math.round(dist);
     }
     document.querySelector(':root').style.setProperty('--bg_overlay', "rgba("+r+","+g+","+b+",0.65)");
     //change background overlay color
