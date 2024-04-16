@@ -10,7 +10,9 @@ const basic = {
   colordef:["Easy","Normal","Intermediate","Advanced","Advanced Long","Expert","Expert Long"],
   colorhue:["rgb(255,255,255)","rgb(247, 237, 47)","rgb(255, 153, 0)","rgb(92, 63, 34)","rgb(19, 191, 42)","rgb(209, 15, 15)","rgb(46, 125, 209)"],
   navcon:true,
-  timer:null
+  timer:null,
+  hotcold: false,
+  hotcolden:0
 };
 let shareData = {
   title: "Takoma Park Orienteering",
@@ -214,9 +216,11 @@ const getPosition = function(position) {
   let currentLat = position.coords.latitude.toFixed(5); 
   let currentLong = position.coords.longitude.toFixed(5); 
   
-  let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(5)); 
-  let accuracy = 0.00015;
-  let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
+  let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(5));
+  let accuracy = 15; //meters
+  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)); // 0.000009 = 1 meter
+  let accuracyLong = accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)); //0.00003170478 = 1 meter
+  let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracyLat && Math.abs(currentLong - targetLong) <= accuracyLong; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
     //success
@@ -287,6 +291,7 @@ const startCourse = function() {
   },1000);
 };
 const endCourse = function() {
+  orienteering["starttime"] -= (orienteering["bonustime"]*1000);
   tab(4);
   basic.timer = clearInterval(basic.timer);
   orienteering["mapstarted"] = false;
@@ -405,7 +410,8 @@ basic.maps = JSON.parse(responseText)["Maps"];
         "mapstarted":false,
         "elevation":[],
         "starttime":0,
-        "endtime":0
+        "endtime":0,
+        "bonustime":0,
       }`);
   }
   loadMaps();
@@ -441,5 +447,30 @@ const closeFullscreen = function() {
     document.webkitExitFullscreen();
   } else if (document.msExitFullscreen) { /* IE11 */
     document.msExitFullscreen();
+  }
+};
+ const hotcoldmode = function() {
+   if (basic.hotcold && basic.hotcolden != orienteering["currentControl"]) {
+     basic.hotcold = !basic.hotcold;
+     document.querySelector(':root').style.setProperty('--bg_overlay', "rgba(0,0,0,0.65)");
+   }
+   else if (basic.hotcolden != orienteering["currentControl"]) {
+     basic.hotcolden = orienteering["currentControl"];
+     basic.hotcold = !basic.hotcold;
+     orienteering["bonustime"] += 120; // extra seconds
+   }
+ };
+const hotCold = function(acc) {
+  if (basic.hotcold) {
+    let rgb = {
+      r:0,
+      g:0,
+      b:0
+    };
+    if (acc >= 0.00) {
+      rgb.r = 255;
+    }
+    document.querySelector(':root').style.setProperty('--bg_overlay', "rgba("+r+","+g+","+b+",0.65)");
+    //change background overlay color
   }
 };
