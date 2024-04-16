@@ -279,18 +279,18 @@ video {
 .grey {
   color:#bfbfbf;
 }
-#courseTable_on {
+.courseTable {
   border:none;
   width:100%;
   font-size: 25px;
 }
-#courseTable_on tr {
+.courseTable tr {
   border:none;
 }
-#courseTable_on td {
+.courseTable td {
   position:relative;
 }
-#courseTable_on td span {
+.courseTable td span {
   background:var(--c2);
   color:var(--color);
   padding:10px 0px;

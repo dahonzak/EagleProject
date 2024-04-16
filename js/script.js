@@ -43,6 +43,12 @@ const mapDetails = {
   display: document.getElementById("mapdisplay"),
   detail: document.getElementById("mapdetail")
 };
+const resultsPage = {
+  controls: document.getElementById("courseControlLength_off"),
+  distance: document.getElementById("courseDistance_off"),
+  elevation: document.getElementById("courseElevation_off"),
+  split: document.getElementById("courseSplit_off")
+};
 const course = document.getElementById('course');
 const testing = document.getElementById('testing');
 // ----------------end of initilization-------------------- //
@@ -81,13 +87,15 @@ const calcDistance = function(map) {
 const toRad = function(Value) {
     return Value * Math.PI / 180;
 };
-const warning = function(h,p) {
+const warning = function(h,p,f) {
   let currentW = "";
   if (!(localStorage.getItem("Warnings") === null)) {
     currentW = localStorage.getItem("Warnings");
   }
   if (!page.warning && !currentW.includes(h)) {
-    localStorage.setItem("Warnings",currentW+","+h);
+    if (f) {
+      localStorage.setItem("Warnings",currentW+","+h);
+    }
     page.warning = true;
     let dis = document.createElement("div");
     dis.classList.add("perm");
@@ -188,7 +196,7 @@ const printMap = function() {
 const showPosition = function(position) {
   const footer = document.getElementsByClassName("footer")[0];
   footer.textContent = "Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
-  if (orienteering && orienteering["mapstarted"]) {
+  if (orienteering && orienteering["mapstarted"] && (position.coords.accuracy <= 15)) {
     orienteering["avgAccuracy"].push(position.coords.accuracy);
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
     orienteering["cordstime"].push(new Date().getTime());
@@ -250,7 +258,7 @@ const showError = function(error) {
     case error.UNKNOWN_ERROR:
       break;
   }
-  warning("Location Request","Your device likely does not have location services enabled.</p><b class='grey'>IOS: </b>aA → Settings → Scroll Down → Location → Allow<br><b class='grey'>Android: </b>⋮ → Scroll Down → ⓘ → Permissions → Location → On");
+  warning("Location Request","Your device likely does not have location services enabled.</p><b class='grey'>IOS: </b>aA → Settings → Scroll Down → Location → Allow<br><b class='grey'>Android: </b>⋮ → Scroll Down → ⓘ → Permissions → Location → On",true);
 };
 const getLocation = function() {
   if (navigator.geolocation) {
@@ -288,6 +296,13 @@ const endCourse = function() {
   if (cc1 <= 9) {cc1 = "0" + cc1;}
   
   shareData.text = "Course: "+orienteering["course"]+"\n\nDistance: "+orienteering["distance"].toFixed(1)+" km\nTime: "+(parseInt(cc/60)+':'+cc1);
+  document.getElementsByClassName('time')[0].textContent = "Time: "+(parseInt(cc/60)+':'+cc1);
+  resultsPage.controls.textContent = orienteering["Controls"].length;
+  resultsPage.distance.textContent = orienteering["distance"].toFixed(1)+" / "+ orienteering["length"].toFixed(1)+ " km";
+  resultsPage.elevation.textContent = orienteering["elevation"].reduce((acc, curr) => acc + curr, 0).toFixed(1) + "m";
+  resultsPage.split.textContent = (cc / (orienteering["Controls"].length - 1)).toFixed(2) + "s";
+
+
   localStorage.clear();
 };
 const repeating = function() {
@@ -302,7 +317,7 @@ const loadCourse = function() {
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
-  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is.");
+  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is.",true);
 };
 const openOptions = function() {
   tab(9);
@@ -311,7 +326,7 @@ const updateCourseInfo = function() {
   let cc = orienteering["time"];
   let cc1 = parseInt(cc%60);
   if (cc1 <= 9) {cc1 = "0" + cc1;}
-  document.getElementsByClassName('time')[0].textContent = (parseInt(cc/60)+':'+cc1);
+  document.getElementsByClassName('time')[1].textContent = (parseInt(cc/60)+':'+cc1);
   if (orienteering["currentControl"] == 0) {
     document.getElementsByClassName('control')[0].textContent = "Start";
   }

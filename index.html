@@ -54,6 +54,27 @@
     <!-- 4 -->
     <div class='tab'>
       <h1>Results</h1>
+      <table class='courseTable'>
+        <tr>
+          <th>Controls</th>
+          <th>Distance</th>
+        </tr>
+        <tr>
+          <td><span id='courseControlLength_off'>--</span></td>
+          <td><span id='courseDistance_off'>0.0/0.0km</span></td>
+        </tr>
+      </table>
+      <table class='courseTable'>
+        <tr>
+          <th>Elevation Change</th>
+          <th>Average Split</th>
+        </tr>
+        <tr>
+          <td><span id='courseElevation_off'>0m</span></td>
+          <td><span id='courseSplit_off'>0:00</span></td>
+        </tr>
+      </table>
+      <h1 class='time'>00:00</h1>
       <div class='button mainPageBtn' id='shareButton'>Share</div>
       <!-- Course Time as well as share button and other course details -->
     </div>
@@ -76,7 +97,7 @@
     <!-- 6 -->
     <div class='tab' id='course'>
       <h1 id='courseName_on'></h1>
-      <table id='courseTable_on'>
+      <table class='courseTable'>
         <tr>
           <th>Controls</th>
           <th>Distance</th>
@@ -124,7 +145,7 @@
     <div class='tab'>
       <h1>About</h1>
       <h2>Orienteering Takoma Park Eagle Scout Project</h2>
-      <p>Hello, my name is Dominik Honzak and I created this website as part of my 2024 Eagle Scout project. This website was created entirely from scratch using the Replit IDE and hosted in a virtual machine on Github static pages. I came up with this idea after many brainstorming sessions with friends and family. The idea of making an Eagle Project related to orienteering originally came from a family friend that has helped me through scouting for many years. I then develpoed this idea and looked at things like my time constraints and my personal skills, programming being one of my best skills. I figured I could throw together a website like this. Although simplistic in theory its an innovative idea, nothing remotely similar could be found anywhere. I even tried using AI but because of its complexities and the complete lack of data/documentation on website geolocation I was unsuccessful in finding any outside information that would have been helpful. This tool took a lot of time to create and I hope it can be put to good use. I hope this tool can help inspire many to learn how to use a map and a compass or to just get out of the house and exercise.</p>
+      <p>Hello, my name is Dominik Honzak and I created this website as part of my 2024 Eagle Scout project. This website was created entirely from scratch using the Replit IDE and hosted on Github static pages. I came up with this idea after many brainstorming sessions with friends and family. The idea of making an Eagle Project related to orienteering originally came from a family friend that has helped me through scouting for many years. I then develpoed this idea and looked at things like my time constraints and my personal skills, programming being one of my best skills. I figured I could throw together a website like this. Although simplistic in theory its an innovative idea, nothing remotely similar could be found anywhere. I even tried using AI but because of its complexities and the complete lack of data/documentation on website geolocation I was unsuccessful in finding any outside information that would have been helpful. This tool took a lot of time to create and I hope it can be put to good use. I hope this tool can help inspire many to learn how to use a map and a compass or to just get out of the house and exercise.</p>
        <div class='button mainPageAlt' onclick='tab(0);'>Back</div>
     </div>
     <div class="footer"></div>
