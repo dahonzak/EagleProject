@@ -46,6 +46,9 @@ const mapDetails = {
 const course = document.getElementById('course');
 const testing = document.getElementById('testing');
 // ----------------end of initilization-------------------- //
+const changeBg = function(bg) {
+  document.querySelector(':root').style.setProperty('--bg', "url("+replaceGit+"/images/"+bg+") no-repeat fixed center center");
+};
 
 const tab = function(tab) {
   const classes = document.getElementsByClassName("tab");
@@ -53,6 +56,14 @@ const tab = function(tab) {
   shown[0].classList.remove("show");
   classes[tab].classList.add("show");
   page.tab = tab;
+  switch (tab) {
+    case 0:
+      changeBg("bg.png");
+      break;
+    case 10:
+      changeBg("abt.jpg");
+      break;
+  };
 };
 const calcDistance = function(map) {
   let distance = 0.0;
@@ -177,7 +188,7 @@ const printMap = function() {
 const showPosition = function(position) {
   const footer = document.getElementsByClassName("footer")[0];
   footer.textContent = "Accuracy: " + position.coords.accuracy.toFixed(2) + "m";
-  if (orienteering.hasOwnProperty("mapstarted") && orienteering["mapstarted"]) {
+  if (orienteering && orienteering["mapstarted"]) {
     orienteering["avgAccuracy"].push(position.coords.accuracy);
     orienteering["cords"].push(position.coords.latitude + "," + position.coords.longitude);
     orienteering["cordstime"].push(new Date().getTime());
@@ -281,7 +292,7 @@ const endCourse = function() {
 };
 const repeating = function() {
   getLocation();
-  if (orienteering.hasOwnProperty("mapstarted") && orienteering["mapstarted"]) {
+  if (orienteering && orienteering["mapstarted"]) {
 localStorage.setItem("Course",JSON.stringify(orienteering)); 
   }
 }
