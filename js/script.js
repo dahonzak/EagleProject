@@ -217,7 +217,7 @@ const getPosition = function(position) {
   let currentLong = position.coords.longitude.toFixed(5); 
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(5));
-  let accuracy = 15; //meters
+  let accuracy = 15; 
   let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)); // 0.000009 = 1 meter
   let accuracyLong = accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)); //0.00003170478 = 1 meter
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracyLat && Math.abs(currentLong - targetLong) <= accuracyLong; 
@@ -411,7 +411,7 @@ basic.maps = JSON.parse(responseText)["Maps"];
         "elevation":[],
         "starttime":0,
         "endtime":0,
-        "bonustime":0,
+        "bonustime":0
       }`);
   }
   loadMaps();
