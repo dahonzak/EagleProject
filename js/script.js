@@ -2,7 +2,7 @@
 //Created Entirely from scratch by Dominik Honzak//
 
 
-const replaceGit = "/EagleProject"; /* /EagleProject 
+const replaceGit = ""; /* /EagleProject 
 */
 const basic = {
   maps:null,
@@ -213,14 +213,20 @@ const showPosition = function(position) {
     footer.style.background = "var(--colorIn)";
   }
 };
+const toSP = function(x) {
+    if (x.toString().includes("e")) {
+        x = parseFloat(x.toString().split("e")[0]) * Math.pow(10, parseFloat(x.toString().split("e")[1]));
+    }
+    return x.toFixed(6);
+};
 const getPosition = function(position) {
   let currentLat = position.coords.latitude.toFixed(5); 
   let currentLong = position.coords.longitude.toFixed(5); 
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(5));
   let accuracy = 15; 
-  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)); // 0.000009 = 1 meter
-  let accuracyLong = accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)); //0.00003170478 = 1 meter
+  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)).toFixed(6); // 0.000009 = 1 meter
+  let accuracyLong = toSP(accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180))); //0.00003170478 = 1 meter
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracyLat && Math.abs(currentLong - targetLong) <= accuracyLong; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
