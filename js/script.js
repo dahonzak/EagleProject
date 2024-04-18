@@ -204,7 +204,8 @@ const showPosition = function(position) {
     orienteering["cordstime"].push(new Date().getTime());
     orienteering["distance"] = calcDistance(orienteering["cords"]);
     orienteering["elevation"].push(position.coords.altitude);
-    hotCold(calcDistance([position.coords.latitude+", "+position.coords.longitude,orienteering["Controls"][orienteering["currentControl"]]]));
+    hotCold(calcDistance([(position.coords.latitude+", "+position.coords.longitude),basic.maps[orienteering["courseindex"]]["Controls"][orienteering["currentControl"]]])*1000);
+    
   }
   if (position.coords.accuracy >= 15) {
     footer.style.background = "red";
@@ -225,8 +226,8 @@ const getPosition = function(position) {
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord).toFixed(5));
   let accuracy = 15; 
-  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)).toFixed(6); // 0.000009 = 1 meter
-  let accuracyLong = toSP(accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180))); //0.00003170478 = 1 meter
+  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)).toFixed(6); // 0.0000089 = 1 meter
+  let accuracyLong = toSP(accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180))); //0.000000025 = 1 meter
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracyLat && Math.abs(currentLong - targetLong) <= accuracyLong; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
@@ -480,7 +481,7 @@ const hotCold = function(dist) {
     else if (Math.round(dist) <= 255) {
       rgb.r = 255 - Math.round(dist);
     }
-    document.querySelector(':root').style.setProperty('--bg_overlay', "rgba("+r+","+g+","+b+",0.65)");
+    document.querySelector(':root').style.setProperty('--bg_overlay', "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.65)");
     //change background overlay color
   }
 };
