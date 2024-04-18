@@ -313,7 +313,7 @@ const endCourse = function() {
   resultsPage.controls.textContent = orienteering["Controls"].length;
   resultsPage.distance.textContent = orienteering["distance"].toFixed(1)+" / "+ orienteering["length"].toFixed(1)+ " km";
   resultsPage.elevation.textContent = orienteering["elevation"].reduce((acc, curr) => acc + curr, 0).toFixed(1) + "m";
-  resultsPage.split.textContent = (cc / (orienteering["Controls"].length - 1)).toFixed(2) + "s";
+  resultsPage.split.textContent = Math.round(cc / (orienteering["Controls"].length - 1)) + "s";
 
 
   localStorage.clear();
@@ -466,6 +466,8 @@ const closeFullscreen = function() {
      basic.hotcolden = orienteering["currentControl"];
      basic.hotcold = !basic.hotcold;
      orienteering["bonustime"] += 120; // extra seconds
+     warning("HC Mode On","Hot Cold Mode Enabled, 2 min have been added. How to use?: Red means you are closer to control and blue indicates you are further away. This feature is only available while your phone is on and in addition will only work for this control.",false);
+     tab(6);
    }
  };
 const hotCold = function(dist) {
@@ -475,6 +477,7 @@ const hotCold = function(dist) {
       g:0,
       b:0
     };
+  
     if (Math.round(dist) >= 255 && Math.round(dist) <= 510) {
       rgb.b = 255 - Math.round(dist);
     }
