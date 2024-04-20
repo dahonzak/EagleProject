@@ -226,10 +226,11 @@ const getPosition = function(position) {
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord));
   let accuracy = 15; 
-  // let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180)/360)).toFixed(6); // 0.0000089 = 1 meter
-  // let accuracyLong = (accuracy/(2*Math.PI*6371000*Math.cos(targetLat*Math.PI/180))).toFixed(9); //0.000000025 = 1 meter
-  // let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracyLat && Math.abs(currentLong - targetLong) <= accuracyLong; 
-  let withinAccuracy = calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000 <= accuracy && position.coords.accuracy <= accuracy;
+  let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).toFixed(6); // 0.0000089 = 1 meter
+  let accuracyLong = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat)))).toFixed(9); //0.000000025 = 1 meter
+  let withinAccuracy = Math.abs(toRad(currentLat) - targetLat) <= accuracyLat && Math.abs(toRad(currentLong) - targetLong) <= accuracyLong; 
+  // let withinAccuracy = calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000 <= accuracy && position.coords.accuracy <= accuracy;
+  
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
     //success
     orienteering["Controls"].push({ "Control": targetLat+","+targetLong, "Timestamp": new Date().getTime() });
