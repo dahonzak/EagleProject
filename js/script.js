@@ -267,6 +267,7 @@ const getPosition = function(position) {
     }
   }
   else { 
+    testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+"m");
     // testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4)+"<br>Distance: "+(calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000).toFixed(2)+"m");
     tab(8);
     setTimeout(function() {
