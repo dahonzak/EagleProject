@@ -252,7 +252,7 @@ const getPosition = function(position) {
     }
   }
   else { 
-    testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4)+"<br>Distance: "+(calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000).toFixed(2)+"m");
+    // testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4)+"<br>Distance: "+(calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000).toFixed(2)+"m");
     tab(8);
     setTimeout(function() {
       tab(6);
