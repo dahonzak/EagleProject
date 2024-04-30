@@ -57,7 +57,6 @@ const testing = document.getElementById('testing');
 const changeBg = function(bg) {
   document.querySelector(':root').style.setProperty('--bg', "url("+replaceGit+"/images/"+bg+") no-repeat fixed center center");
 };
-
 const tab = function(tab) {
   const classes = document.getElementsByClassName("tab");
   const shown = document.getElementsByClassName("show");
