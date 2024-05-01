@@ -243,7 +243,7 @@ const getPosition = function(position) {
   // let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).toFixed(6); // 0.0000089 = 1 meter
   // let accuracyLong = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat)))).toFixed(9); //0.000000025 = 1 meter
   // let withinAccuracy = Math.abs(toRad(currentLat) - toRad(targetLat)) <= accuracyLat && Math.abs(toRad(currentLong) - toRad(targetLong)) <= accuracyLong; 
-  let withinAccuracy = calculateDistance(currentLat,currentLong,targetLat,targetLong) <= accuracy && position.coords.accuracy <= accuracy;
+  let withinAccuracy = calculateDistance(currentLat,currentLong,targetLat,targetLong) <= accuracy && position.coords.accuracy <= 15;
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
     //success
@@ -266,8 +266,7 @@ const getPosition = function(position) {
     }
   }
   else { 
-    testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+"m");
-    // testing.innerHTML = ("Off by lat ± "+Math.abs(currentLat - targetLat).toFixed(4)+" long ± "+Math.abs(currentLong - targetLong).toFixed(4)+"<br>Distance: "+(calcDistance([currentLat+", "+currentLong,targetLat+", "+targetLong])*1000).toFixed(2)+"m");
+    // testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+"m");
     tab(8);
     setTimeout(function() {
       tab(6);
