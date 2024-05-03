@@ -266,11 +266,20 @@ const getPosition = function(position) {
     }
   }
   else { 
+    
     // testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+"m");
-    tab(8);
-    setTimeout(function() {
-      tab(6);
-    },3500);
+    if (!(position.coords.accuracy <= 15)) {
+      tab(11);
+      setTimeout(function() {
+        tab(6);
+      },3500);
+    }
+    else {
+      tab(8);
+      setTimeout(function() {
+        tab(6);
+      },3500);
+    }
   }
   basic.navcon = true;
 };
