@@ -29,28 +29,6 @@
          ],
          "Map":"/EagleProject/maps/ElementarytoMiddle.jpg",
          "Picture":"/EagleProject/images/startermap.jpg"
-      },
-     {
-        "Name":"Test Map Walk Down the Hill ",
-        "Difficulty":0,
-        "Controls":[
-          "38.989295, -77.003046",
-           "38.988621, -77.003802",
-           "38.986076, -77.003576",
-           "38.983465, -77.000241"
-        ],
-        "Map":"",
-        "Picture":""
-     },{
-           "Name":"Blair Testing",
-           "Difficulty":0,
-           "Controls":[
-             "39.0186761791567, -77.01243518716025",
-              "38.988621, -77.003802",
-              "38.986076, -77.003576"
-           ],
-           "Map":"",
-           "Picture":""
-        }
+      }
    ]
 }

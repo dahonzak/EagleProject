@@ -277,7 +277,7 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
   }
   else { 
     
-    testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
+    // testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
     if (!(position.coords.accuracy <= 15)) {
       tab(11);
       setTimeout(function() {
@@ -364,7 +364,7 @@ const loadCourse = function() {
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
-  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is.",true);
+  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is. <b>Please be aware that this website sometimes does not work.</b>",true);
 };
 const openOptions = function() {
   tab(9);
