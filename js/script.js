@@ -239,11 +239,21 @@ const getPosition = function(position) {
   let currentLong = position.coords.longitude; 
   
   let [targetLat, targetLong] = basic.maps[orienteering.courseindex].Controls[orienteering.currentControl].split(",").map(coord => parseFloat(coord));
-  let accuracy = 10; 
-  // let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).toFixed(6); // 0.0000089 = 1 meter
-  // let accuracyLong = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat)))).toFixed(9); //0.000000025 = 1 meter
-  // let withinAccuracy = Math.abs(toRad(currentLat) - toRad(targetLat)) <= accuracyLat && Math.abs(toRad(currentLong) - toRad(targetLong)) <= accuracyLong; l
-  let withinAccuracy = calculateDistance(currentLat,currentLong,targetLat,targetLong) <= accuracy && position.coords.accuracy <= 15;
+   
+/* 
+solution 1
+let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).toFixed(6); // 0.0000089 = 1 meter
+  let accuracyLong = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat)))).toFixed(9); //0.000000025 = 1 meter
+  let withinAccuracy = Math.abs(toRad(currentLat) - toRad(targetLat)) <= accuracyLat && Math.abs(toRad(currentLong) - toRad(targetLong)) <= accuracyLong; */
+  
+  /* 
+  solution 2
+  let accuracy = 10;
+  //the code I was using before
+  let withinAccuracy = calculateDistance(currentLat,currentLong,targetLat,targetLong) <= accuracy && position.coords.accuracy <= 15;*/
+  
+  let accuracy = 0.0002;
+  let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
     //success
