@@ -42,7 +42,9 @@
       <h1>Choose</h1>
       <div class='choice'>
         <div onclick='tab(5);'>New to Orienteering?</div>
+        <div onclick='tab(12);'>How to use this Application?</div>
         <div onclick='tab(2);'>Quick Start (Alpha Testing)</div>
+        
       </div>
     </div>
     <!-- 2 -->
@@ -120,7 +122,7 @@
         </tr>
       </table>
       <div id='courseDifficulty_on'></div>
-      <div class='control'>Start</div>
+      <div class='control' onclick="checkLocation();">Start</div>
       <h1 class='time'>00:00</h1>
       <div class='distance'>0.0 km</div>
       <div class='button mainPageAlt' onclick="openOptions();"><i class='fa fa-gear'></i> Options</div>
@@ -168,6 +170,12 @@
       <h2>Your accuracy is too low to confirm that you are in the correct area.</h2>
       <div class='circle blue'>?</div>
       <!-- Course with timer and check location button -->
+    </div>
+    <!-- 12 -->
+    <div class='tab'>
+      <h1>Tutorial</h1>
+      <h2>How to use the orienteering application?</h2>
+      <p>If you have done orienteering before this application implements all parts of orienteering except the compass. When you open <b class="blue hover" >Quickstart</b> there will be maps listed below the legend. If you click on one the course opens you can then print the map and start the course. <br><br>When you have arrived at your first destination (the start) click confirm to confirm you are in the right location. Continue this process to the end of the course.</p>
     </div>
     <div class="footer"></div>
   </div>
