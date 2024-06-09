@@ -2,7 +2,7 @@
 //Created Entirely from scratch by Dominik Honzak//
 
 
-const replaceGit = "/EagleProject"; /* /EagleProject 
+const replaceGit = ""; /* /EagleProject 
 */
 const basic = {
   maps:null,
@@ -52,7 +52,7 @@ const resultsPage = {
   split: document.getElementById("courseSplit_off")
 };
 const mapFilter = {
-  type: document.getElementById("filter_name"),
+  name: document.getElementById("filter_name"),
   display: document.getElementById("filtered")
 };
 const course = document.getElementById('course');
@@ -150,7 +150,7 @@ const loadMaps = function() {
     type.classList.add("type");
     type.style.background = basic.colorhue[i];
     type.innerHTML = basic.colors[i].charAt(0).toUpperCase() + basic.colors[i].slice(1) + " (" + basic.colordef[i] + ")";
-    type.onclick = "mapFiltering("+i+")";
+    type.onclick = function() {mapFiltering(i);};
     maplevels.appendChild(type);
   }
   mapArray.appendChild(maplevels);
@@ -199,7 +199,7 @@ const loadMap = function(i) {
   
 };
 const mapFiltering = function(filter) {
-  mapFilter.type = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
+  mapFilter.name = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
   mapFilter.display.innerHTML = "";
   let counter = 0;
   for (let i = 0; i < basic.maps.length; i++) {
