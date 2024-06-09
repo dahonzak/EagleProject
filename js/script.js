@@ -200,8 +200,11 @@ const loadMap = function(i) {
 };
 const mapFiltering = function(filter) {
   mapFilter.type = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
+  mapFilter.display.innerHTML = "";
+  let counter = 0;
   for (let i = 0; i < basic.maps.length; i++) {
     if (basic.maps[i]["Difficulty"] == filter) {
+      counter++;
       let map = document.createElement("div");
       map.classList.add("mapselect");
       if (!basic.maps[i]["Picture"]) {
@@ -226,7 +229,10 @@ const mapFiltering = function(filter) {
       map.onclick = function() {loadMap(i);orienteering["currentControl"] = 0;};
       mapFilter.display.appendChild(map);
     }
-  };
+  }
+  if (counter == 0) {
+    mapFilter.display.innerHTML = "No maps found";
+  }
   tab(13);
 };
 const downloadMap = async function() {
