@@ -183,7 +183,7 @@ const loadMap = function(i) {
   orienteering["courseindex"] = i;
   mapDetails.name.textContent = orienteering["course"];
   if (!basic.maps[i]["Map"]) {
-    mapDetails.display.src = replaceGit+"/images/icon.png";
+    mapDetails.display.src = replaceGit+"/images/soon.jpg";
   }
   else {
     mapDetails.display.src = basic.maps[i]["Map"];
