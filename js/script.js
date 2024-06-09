@@ -199,7 +199,7 @@ const loadMap = function(i) {
   
 };
 const mapFiltering = function(filter) {
-  mapFilter.name = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
+  mapFilter.name.textContent = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
   mapFilter.display.innerHTML = "";
   let counter = 0;
   for (let i = 0; i < basic.maps.length; i++) {
