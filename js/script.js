@@ -51,6 +51,10 @@ const resultsPage = {
   elevation: document.getElementById("courseElevation_off"),
   split: document.getElementById("courseSplit_off")
 };
+const mapFilter = {
+  type: document.getElementById("filter_name"),
+  display: document.getElementById("filtered")
+};
 const course = document.getElementById('course');
 const testing = document.getElementById('testing');
 // ----------------end of initilization-------------------- //
@@ -146,6 +150,7 @@ const loadMaps = function() {
     type.classList.add("type");
     type.style.background = basic.colorhue[i];
     type.innerHTML = basic.colors[i].charAt(0).toUpperCase() + basic.colors[i].slice(1) + " (" + basic.colordef[i] + ")";
+    type.onclick = "mapFiltering("+i+")";
     maplevels.appendChild(type);
   }
   mapArray.appendChild(maplevels);
@@ -192,6 +197,37 @@ const loadMap = function(i) {
   mapDetails.detail.innerHTML = "";
   tab(3);
   
+};
+const mapFiltering = function(filter) {
+  mapFilter.type = basic.colors[filter].charAt(0).toUpperCase() + basic.colors[filter].slice(1) + " (" + basic.colordef[filter] + ")";
+  for (let i = 0; i < basic.maps.length; i++) {
+    if (basic.maps[i]["Difficulty"] == filter) {
+      let map = document.createElement("div");
+      map.classList.add("mapselect");
+      if (!basic.maps[i]["Picture"]) {
+        map.style.background = "url("+replaceGit+"/images/icon.png)";
+      }
+      else {
+        map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
+      }
+      map.style.backgroundSize = "cover";
+      let mapName = document.createElement("div");
+      mapName.classList.add("mapname");
+      mapName.textContent = basic.maps[i]["Name"];
+      map.appendChild(mapName);
+      let mapDiff = document.createElement("div");
+      mapDiff.classList.add("mapdiff");
+      mapDiff.style.background = basic.colorhue[basic.maps[i]["Difficulty"]];
+      map.appendChild(mapDiff);
+      let mapLength = document.createElement("div");
+      mapLength.classList.add("maplength");
+      mapLength.textContent = calcDistance(basic.maps[i]["Controls"]).toFixed(1)+" km";
+      map.appendChild(mapLength);
+      map.onclick = function() {loadMap(i);orienteering["currentControl"] = 0;};
+      mapFilter.display.appendChild(map);
+    }
+  };
+  tab(13);
 };
 const downloadMap = async function() {
   const image = await fetch(orienteering["currentMap"]);
