@@ -72,7 +72,7 @@ const tab = function(tab) {
       changeBg("bg.png");
       break;
     case 10:
-      changeBg("abt.jpg");
+      changeBg("water.jpg");
       break;
   };
 };
