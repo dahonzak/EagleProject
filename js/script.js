@@ -24,6 +24,19 @@ const page = {
   blur:false,
   warning:false
 };
+const events = {
+  name:null,
+  date:null,
+  location:null,
+  time:null,
+  banner:document.getElementById("eventbanner"),
+  bannerimg:null,
+  bannersub:document.getElementById("eventbannersub"),
+  datetime:document.getElementById("eventtime"),
+  eventname:document.getElementById("eventname"),
+  btn:document.getElementById("eventbtn"),
+  event:0
+};
 let orienteering;
  
 const readTextFile = function(file,callback) {
@@ -469,6 +482,7 @@ const resumeCourse = function() {
   }
 };
 readTextFile(replaceGit+"/json/maps.json",function(responseText) {
+  
 basic.maps = JSON.parse(responseText)["Maps"];
   if (!(localStorage.getItem("Course") === null)) {
   if (JSON.parse(localStorage.getItem("Course"))["course"]) {
@@ -500,6 +514,25 @@ basic.maps = JSON.parse(responseText)["Maps"];
   }
   loadMaps();
 
+});
+readTextFile(replaceGit+"/json/events.json",function(even) {
+    if(events.event != null) { 
+      let config = JSON.parse(even)["Events"][events.event];
+      events.bannerimg = replaceGit+"/events/"+config.img;
+      events.banner.style.background = "url('"+events.bannerimg+"') center center no-repeat";
+      events.banner.style.backgroundSize = "cover";
+      events.banner.style.display = "block";
+      events.banner.onclick = function() {
+        tab(15);
+        events.eventname.textContent = config.name;
+        events.bannersub.style.background = "url('"+events.bannerimg+"') center center no-repeat";
+        events.bannersub.style.backgroundSize = "cover";
+        events.datetime.innerHTML = config.date+"<br>"+config.time;
+        events.btn.onclick = function() {
+          window.open(config.location);
+        };
+      };
+    }
 });
 window.addEventListener("focus", function(event) 
 { 

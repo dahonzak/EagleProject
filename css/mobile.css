@@ -41,4 +41,12 @@
   .tab {
     padding-bottom:100px;
   }
+  #eventbanner {
+    width:calc(100vw - 50px);
+    height:100px;
+  }
+  #eventbannersub {
+    width:calc(100vw - 50px);
+    height:100px;
+  }
 }
