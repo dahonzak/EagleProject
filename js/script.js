@@ -7,7 +7,7 @@ const replaceGit = "/EagleProject"; /* /EagleProject
 const basic = {
   maps:null,
   colors:["white","yellow","orange","beige","brown","green","red","blue"],
-  colordef:["Easy","Normal","Intermediate","Intermediate Long","Advanced","Advanced Long","Expert","Expert Long"],
+  colordef:["Easy","Normal","Intermediate","Intermediate Short","Advanced","Advanced Long","Expert","Expert Long"],
   colorhue:["rgb(255,255,255)","rgb(247, 237, 47)","rgb(255, 153, 0)","rgb(117, 107, 75)","rgb(92, 63, 34)","rgb(19, 191, 42)","rgb(209, 15, 15)","rgb(46, 125, 209)"],
   navcon:true,
   timer:null,
