@@ -35,7 +35,7 @@ const events = {
   datetime:document.getElementById("eventtime"),
   eventname:document.getElementById("eventname"),
   btn:document.getElementById("eventbtn"),
-  event:0
+  event:null
 };
 let orienteering;
  
