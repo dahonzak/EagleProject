@@ -419,7 +419,7 @@ const loadCourse = function() {
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
-  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is. <b>Please be aware that this website sometimes does not work.</b>",true);
+  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is. <br>Please be aware that although this is a website it will still save your course where you left off so you can turn off your phone while running. (if the screen is off distance mesurement will be slightly off)",true);
 };
 const openOptions = function() {
   tab(9);
@@ -575,7 +575,7 @@ const closeFullscreen = function() {
      basic.hotcolden = orienteering["currentControl"];
      basic.hotcold = !basic.hotcold;
      orienteering["bonustime"] += 120; // extra seconds
-     warning("HC Mode On","Hot Cold Mode Enabled, 2 min have been added. How to use?: Red means you are closer to control and blue indicates you are further away. This feature is only available while your phone is on and in addition will only work for this control.",false);
+     warning("HC Mode On","Hot Cold Mode Enabled, 2 min have been added to overall time. How to use?: Red means you are closer to control and blue indicates you are further away. This feature is only available while your phone is on and in addition will only work for this control.",false);
      tab(6);
    }
  };
