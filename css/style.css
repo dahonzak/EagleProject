@@ -291,8 +291,8 @@ video {
   color:#bfbfbf;
 }
 .bgbl {
-  background:#383838 !important;
-  color:white;
+  background:var(--color) !important;
+  color:var(--c1) !important;
 }
 .courseTable {
   border:none;
