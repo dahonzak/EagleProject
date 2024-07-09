@@ -1,7 +1,6 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
 
-
 const replaceGit = "/EagleProject"; /* /EagleProject 
 */
 const basic = {
@@ -56,7 +55,8 @@ const mapArray = document.getElementById("maps");
 const mapDetails = {
   name: document.getElementById("mapname"),
   display: document.getElementById("mapdisplay"),
-  detail: document.getElementById("mapdetail")
+  detail: document.getElementById("mapdetail"),
+  leaders: document.getElementById("mapleaders")
 };
 const resultsPage = {
   controls: document.getElementById("courseControlLength_off"),
@@ -206,7 +206,7 @@ const loadMap = function(i) {
   else {
     mapDetails.display.src = basic.maps[i]["Map"];
   }
-
+  mapDetails.leaders.onclick = function() {openLeaderboard(basic.maps[i]["Name"]);};
   mapDetails.detail.innerHTML = "";
   tab(3);
   
@@ -332,7 +332,7 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
   }
   else { 
     
-     testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
+     //testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
     if (!(position.coords.accuracy <= 15)) {
       tab(11);
       setTimeout(function() {
@@ -359,7 +359,7 @@ const showError = function(error) {
     case error.UNKNOWN_ERROR:
       break;
   }
-  warning("Location Request","Your device likely does not have location services enabled.</p><b class='grey'>IOS: </b>aA → Settings → Scroll Down → Location → Allow<br><b class='grey'>Android: </b>⋮ → Scroll Down → ⓘ → Permissions → Location → On",true);
+  warning("Location Request","Your device likely does not have location services enabled.</p><b class='grey'>Safari: </b>aA → Settings → Scroll Down → Location → Allow<br><b class='grey'>Android: </b>⋮ → Scroll Down → ⓘ → Permissions → Location → On",true);
 };
 const getLocation = function() {
   if (navigator.geolocation) {
@@ -401,11 +401,28 @@ const endCourse = function() {
   document.getElementsByClassName('time')[0].textContent = "Time: "+(parseInt(cc/60)+':'+cc1);
   resultsPage.controls.textContent = orienteering["Controls"].length;
   resultsPage.distance.textContent = orienteering["distance"].toFixed(1)+" / "+ orienteering["length"].toFixed(1)+ " km";
-  resultsPage.elevation.textContent = orienteering["elevation"].reduce((acc, curr) => acc + curr, 0).toFixed(1) + "m";
+  const elevations = orienteering["elevation"];
+  let elevationGain = 0;
+  let elevationLoss = 0;
+
+  for (let i = 1; i < elevations.length; i++) {
+      const diff = elevations[i] - elevations[i - 1];
+      if (diff > 0) {
+          elevationGain += diff;
+      } else {
+          elevationLoss -= diff; // Using subtraction to handle negative differences
+      }
+  }
+
+  const gainString = elevationGain.toFixed(1) + "m";
+  const lossString = elevationLoss.toFixed(1) + "m";
+  resultsPage.elevation.textContent = gainString;
   resultsPage.split.textContent = Math.round(cc / (orienteering["Controls"].length - 1)) + "s";
 
 
-  localStorage.clear();
+  // Now use `imported.insertData` to call the function
+  insertData(orienteering, warning);
+  
 };
 const repeating = function() {
   getLocation();
@@ -419,7 +436,7 @@ const loadCourse = function() {
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
   document.getElementById("courseDifficulty_on").style.background = basic.colorhue[orienteering["difficulty"]];
-  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is. <br>Please be aware that although this is a website it will still save your course where you left off so you can turn off your phone while running. (if the screen is off distance mesurement will be slightly off)",true);
+  warning("Warning","We suggest that you refrain from staring at your phone while doing the course as this may result in injury. Be aware that some controls are placed off of paths. Conditions such as weather may impact how dangerous a course is. <br>Please be aware that although this is a website it will still save your course where you left off so you can turn off your phone while running. (please be aware distance measurement may have issues)",true);
 };
 const openOptions = function() {
   tab(9);
@@ -493,6 +510,7 @@ basic.maps = JSON.parse(responseText)["Maps"];
   }
   else {
     orienteering = JSON.parse(`{
+        "name":"Anonymous",
         "course":"",
         "courseindex":null,
         "difficulty":0,
@@ -596,4 +614,15 @@ const hotCold = function(dist) {
     document.querySelector(':root').style.setProperty('--bg_overlay', "rgba("+rgb.r+","+rgb.g+","+rgb.b+",0.65)");
     //change background overlay color
   }
+};
+const openLeaderboard = function(crs) {
+  tab(16);
+  requestData(crs);
+};
+const setName = function() {
+  const val = document.getElementById("name").value;
+  if (val) {
+    orienteering["name"] = document.getElementById("name").value;
+  }
+  tab(6);loadCourse();
 };

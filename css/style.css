@@ -258,12 +258,7 @@ video {
   margin:20px auto;
   border-radius:20px;
 }
-.time {
-  
-}
-.distance {
-  
-}
+
 .circle {
   position:absolute;
   top:50%;
@@ -360,4 +355,36 @@ p {
   transition:0.2s;
   cursor:pointer;
   display:block;
+}
+.row {
+  padding:10px 20px;
+  display:block;
+  background:var(--c1);
+  color:var(--color);
+  margin:10px;
+  text-align: left !important;
+}
+.row div {
+  padding:0px 10px;
+  display:inline-block;
+}
+
+.timelead {
+  position:absolute;
+  right: 30px;
+}
+#name {
+  width:calc(100% - 86px);
+  height:40px;
+  line-height:60px;
+  padding:10px 20px;
+  margin:20px;
+  background:var(--colorIn);
+  color:var(--color);
+  border-radius:60px;
+  border:3px solid transparent;
+  font-size: 25px;
+}
+#name:focus {
+  border:3px solid var(--c1);
 }

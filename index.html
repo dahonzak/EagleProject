@@ -65,7 +65,8 @@
          
        </div>
        <div  class='button mainPageBtn' onclick='printMap();'>Print</div>
-      <div  class='button mainPageBtn' onclick='tab(6);loadCourse();'>Start Course</div>
+      <div  class='button mainPageBtn' onclick='tab(17);loadCourse();'>Start Course</div>
+      <div  class='button mainPageBtn' id="mapleaders">Leaderboard</div>
       <div  class='button mainPageAlt' onclick='tab(2);'>Back</div>
       <!-- Course Download Map or print and see details -->
     </div>
@@ -84,7 +85,7 @@
       </table>
       <table class='courseTable'>
         <tr>
-          <th>Elevation Change</th>
+          <th>Elevation Gain</th>
           <th>Average Split</th>
         </tr>
         <tr>
@@ -207,8 +208,22 @@
       <div class='button mainPageBtn' id="eventbtn">Location</div>
       <div class='button mainPageAlt' onclick='tab(1);'>Back</div>
     </div>
+    <!-- 16 -->
+    <div class='tab'>
+      <h1>LeaderBoard</h1>
+      <h2 id="leaderboardtitle"></h2>
+      <div id="leaderboard"></div>
+      <div class='button mainPageAlt' onclick='tab(1);'>Back</div>
+    </div>
+    <!-- 17 -->
+    <div class='tab'>
+      <h1>Name</h1>
+      <input id="name" type="text" placeholder="Type your name here..." maxlength="15" autocomplete="off" />
+      <div class='button mainPageBtn' onclick='setName();'>Submit</div>
+    </div>
     <div class="footer"></div>
   </div>
+  <script src="js/firebase.js" type="module"></script>
   <script src="js/script.js"></script>
 </body>
 
