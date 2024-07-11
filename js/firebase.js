@@ -19,7 +19,7 @@ const analytics = getAnalytics(app);
 const db = getDatabase(app);
 
 const insertData = function(orienteering, warning) {
-  if (orienteering["endtime"] != 0) {
+  if (orienteering["endtime"] != 0 && orienteering["skips"] == 0) {
     set(ref(db, orienteering["course"]+"/"+(orienteering["name"]+new Date().getTime())), {
       Name:orienteering["name"],
       Time:(orienteering["endtime"]-orienteering["starttime"]+orienteering["bonustime"])
@@ -30,6 +30,10 @@ const insertData = function(orienteering, warning) {
       console.error("Error saving to database:", error);
       alert("An error occurred: " + error.message);
     });
+  }
+  else {
+    warning("Course Complete","Your course was not saved. Skips: "+orienteering["skips"],false);
+    localStorage.clear();
   }
 };
 window.insertData = insertData;

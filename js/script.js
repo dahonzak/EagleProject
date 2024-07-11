@@ -150,8 +150,10 @@ const warning = function(h,p,f) {
   }
 };
 const newGame = function() {
-  localStorage.clear();
-  location.reload();
+  if (confirm("Are you sure you want to restart?")) {
+    localStorage.clear();
+    location.reload();
+  }
 };
 const openMap = function() {
   window.open(orienteering["currentMap"], '_blank');
@@ -527,7 +529,8 @@ basic.maps = JSON.parse(responseText)["Maps"];
         "elevation":[],
         "starttime":0,
         "endtime":0,
-        "bonustime":0
+        "bonustime":0,
+        "skips":0
       }`);
   }
   loadMaps();
@@ -625,4 +628,11 @@ const setName = function() {
     orienteering["name"] = document.getElementById("name").value;
   }
   tab(6);loadCourse();
+};
+const skipBtn = function() {
+  if (orienteering["currentControl"] != 0 && orienteering["currentControl"] < (basic.maps[orienteering["courseindex"]]["Controls"].length-1) && confirm("Are you sure you want to skip this control? You will be disqualified and score will not be added to leaderboard.")) {
+    orienteering["currentControl"]++;
+    orienteering["skips"]++;
+    updateCourseInfo();
+  }
 };
