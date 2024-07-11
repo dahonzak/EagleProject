@@ -384,6 +384,7 @@ p {
   border-radius:60px;
   border:3px solid transparent;
   font-size: 25px;
+  outline:none;
 }
 #name:focus {
   border:3px solid var(--c1);
