@@ -201,7 +201,15 @@ video {
   cursor:pointer;
 }
 .mapname {
-  display:none;
+  position:absolute;
+  background:var(--colorIn);
+  color:var(--color);
+  top:10px;
+  left:10px;
+  padding:5px 10px;
+  border-radius: 10px;
+  font-size:18px;
+  max-width:200px;
 }
 .mapdiff {
   position:absolute;

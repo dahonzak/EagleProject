@@ -181,7 +181,7 @@ const loadMaps = function() {
     map.style.backgroundSize = "cover";
     let mapName = document.createElement("div");
     mapName.classList.add("mapname");
-    mapName.textContent = basic.maps[i]["Name"];
+    mapName.textContent = shortenTextByPx(basic.maps[i]["Name"], 200);
     map.appendChild(mapName);
     let mapDiff = document.createElement("div");
     mapDiff.classList.add("mapdiff");
@@ -635,4 +635,17 @@ const skipBtn = function() {
     orienteering["skips"]++;
     updateCourseInfo();
   }
+};
+const shortenTextByPx = function(text, maxWidth) {
+  const canvas = document.createElement("canvas");
+  const context = canvas.getContext("2d");
+  context.font = "18px Arial";
+  if (context.measureText(text).width <= maxWidth) {
+    return text;
+  }
+  let shortenedText = text;
+  while (context.measureText(shortenedText + "...").width > maxWidth) {
+    shortenedText = shortenedText.slice(0, -1);
+  }
+  return shortenedText + "...";
 };
