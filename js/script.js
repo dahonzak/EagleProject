@@ -160,7 +160,7 @@ const openMap = function() {
 };
 const loadMaps = function() {
   let maplevels = document.createElement("div");
-  for (let i = 0; i < basic.colors.length; i++) {
+  for (let i = 0; i < 3; i++) { // basic.colors.length
     let type = document.createElement("div");
     type.classList.add("type");
     type.style.background = basic.colorhue[i];
@@ -173,7 +173,7 @@ const loadMaps = function() {
     let map = document.createElement("div");
     map.classList.add("mapselect");
     if (!basic.maps[i]["Picture"]) {
-      map.style.background = "url("+replaceGit+"/images/icon.png)";
+      return;
     }
     else {
       map.style.background = "url(" + basic.maps[i]["Picture"] + ")";
@@ -231,7 +231,7 @@ const mapFiltering = function(filter) {
       map.style.backgroundSize = "cover";
       let mapName = document.createElement("div");
       mapName.classList.add("mapname");
-      mapName.textContent = basic.maps[i]["Name"];
+      mapName.textContent = shortenTextByPx(basic.maps[i]["Name"], 200);
       map.appendChild(mapName);
       let mapDiff = document.createElement("div");
       mapDiff.classList.add("mapdiff");
