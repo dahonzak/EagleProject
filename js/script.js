@@ -12,7 +12,7 @@ const basic = {
   timer:null,
   hotcold: false,
   hotcolden:0,
-  mid:5000
+  mid:3500
 };
 let shareData = {
   title: "Takoma Park Orienteering",
@@ -655,10 +655,11 @@ const shortenTextByPx = function(text, maxWidth) {
 };
 const startBarProgress = (progressBarId) => {
   const progressBar = document.getElementById(progressBarId);
-  progressBar.style.transition = "width "+(basic.mid/1000)+"s linear";
   progressBar.style.width = "0";
+  progressBar.style.transition = "width "+(basic.mid/1000)+"s linear";
+  progressBar.style.width = "100%";
   setTimeout(() => {
       progressBar.style.transition = "none";
-      progressBar.style.width = "100%";
+      
   }, basic.mid);
 };
