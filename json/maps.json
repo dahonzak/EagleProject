@@ -46,8 +46,8 @@
             "38.9826036355848, -77.0096717482768",
             "38.982104, -77.010948"
          ],
-         "Map":"/EagleProject/maps/TakomaForestPaths.jpg",
-         "Picture":"/EagleProject/images/water.jpg"
+         "Map":"/EagleProject/maps/bowtieloop.jpg",
+         "Picture":"/EagleProject/images/piney1.jpg"
       },
       {
          "Name":"Takoma Forest Pathways",
@@ -67,7 +67,7 @@
             "38.983634793800356, -76.9999981734034",
             "38.982104, -77.010948"
          ],
-         "Map":"",
+         "Map":"/EagleProject/maps/TakomaForestPaths.jpg",
          "Picture":"/EagleProject/images/water.jpg"
       },
       {
