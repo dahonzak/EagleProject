@@ -33,6 +33,11 @@ button {
   outline:none;
   border-radius:5px;
 }
+hr {
+  margin:1em;
+  width:calc(50% - 2em);
+  border-color:var(--c1);
+}
 .type {
   /* opacity:0.7; */
   color:var(--colorIn);
