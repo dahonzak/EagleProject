@@ -142,6 +142,9 @@
       <h1>Confirmed</h1>
       <h2></h2>
       <div class='circle lime'>✓</div>
+      <div class="progress-container">
+        <div id="barConfirmed" class="progress-bar"></div>
+      </div>
       <!-- Course with timer and check location button -->
     </div>
     <!-- 8 -->
@@ -150,14 +153,17 @@
       <h2 id="testing"></h2>
       <h2>Check your accuracy or position and try again.</h2>
       <div class='circle red'>×</div>
+      <div class="progress-container">
+        <div id="barInaccuracy" class="progress-bar"></div>
+      </div>
       <!-- Course with timer and check location button -->
     </div>
     <!-- 9 -->
     <div class='tab' id='course'>
       <h1>Options</h1>
+      <div class='button mainPageBtnH' onclick='openMap();'>View Map</div>
       <div class='button mainPageBtn' onclick='newGame();'>Quit Course</div>
       <div class='button mainPageBtn' onclick='skipBtn();'>Skip Control</div>
-      <div class='button mainPageBtn' onclick='openMap();'>View Map</div>
       <div class='button mainPageBtn' onclick='openFullscreen();'>Enter Fullscreen</div>
       <div class='button mainPageBtn' onclick='hotcoldmode();'>HotCold (Testing)</div>
       <!-- <div class='button mainPageBtn' onclick='closeFullscreen();'>Exit Fullscreen</div> -->
@@ -176,6 +182,9 @@
       <h2 id="testing"></h2>
       <h2>Your accuracy is too low to confirm that you are in the correct area.</h2>
       <div class='circle blue'>?</div>
+      <div class="progress-container">
+        <div id="barConnection" class="progress-bar"></div>
+      </div>
       <!-- Course with timer and check location button -->
     </div>
     <!-- 12 -->

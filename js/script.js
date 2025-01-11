@@ -11,7 +11,8 @@ const basic = {
   navcon:true,
   timer:null,
   hotcold: false,
-  hotcolden:0
+  hotcolden:0,
+  mid:5000
 };
 let shareData = {
   title: "Takoma Park Orienteering",
@@ -324,9 +325,10 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
     orienteering["currentControl"]++;
     if (orienteering["currentControl"] < basic.maps[orienteering["courseindex"]]["Controls"].length) {
     tab(7);
+    startBarProgress("barConfirmed");
     setTimeout(function() {
       tab(6);
-    },3500);
+    },basic.mid);
     }
     else {
       tab(4);
@@ -337,15 +339,17 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
      //testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
     if (!(position.coords.accuracy <= 15)) {
       tab(11);
+      startBarProgress("barConnection");
       setTimeout(function() {
         tab(6);
-      },3500);
+      },basic.mid);
     }
     else {
       tab(8);
+      startBarProgress("barInaccuracy");
       setTimeout(function() {
         tab(6);
-      },3500);
+      },basic.mid);
     }
   }
   basic.navcon = true;
@@ -648,4 +652,13 @@ const shortenTextByPx = function(text, maxWidth) {
     shortenedText = shortenedText.slice(0, -1);
   }
   return shortenedText + "...";
+};
+const startBarProgress = (progressBarId) => {
+  const progressBar = document.getElementById(progressBarId);
+  progressBar.style.transition = "width "+(basic.mid/1000)+"s linear";
+  progressBar.style.width = "0";
+  setTimeout(() => {
+      progressBar.style.transition = "none";
+      progressBar.style.width = "100%";
+  }, basic.mid);
 };

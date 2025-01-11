@@ -112,6 +112,12 @@ button {
   display:block;
   margin:20px auto;
 }
+.mainPageBtnH {
+  width:calc(50% - 2em);
+  background:var(--c1);
+  display:block;
+  margin:20px auto;
+}
 .mainPageAlt {
   width:calc(50% - 2em);
   /* background:linear-gradient(-200deg, var(--c2),var(--c1));*/
@@ -396,4 +402,24 @@ p {
 }
 #name:focus {
   border:3px solid var(--c1);
+}
+.progress-container {
+  position:absolute;
+  bottom:0px;
+  left:0;
+  margin:20px;
+  width: calc(100% - 40px);
+  background-color: var(--colorIn);
+  height: 20px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  position:relative;
+  width: 0;
+  height: 100%;
+  background-color: var(--color);
+  border-radius: 20px;
+  transition: width 3.5s linear;
 }
