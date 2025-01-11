@@ -14,7 +14,7 @@
   :root {
     --bg_overlay:rgba(0,0,0,0.65);
   }
-  .mainPageBtn, .mainPageAlt {
+  .mainPageBtn, .mainPageAlt, .mainPageBtnH {
     width:calc(100% - 2em);
   }
   .choice div {

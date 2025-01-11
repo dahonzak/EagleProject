@@ -639,6 +639,9 @@ const skipBtn = function() {
     orienteering["skips"]++;
     updateCourseInfo();
   }
+  else {
+    warning("Skip Not Available","Please start course to use this function.",false);
+  }
 };
 const shortenTextByPx = function(text, maxWidth) {
   const canvas = document.createElement("canvas");
