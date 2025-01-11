@@ -2,5 +2,17 @@
   "name": "Orienteering, Takoma Park",
   "short_name": "Orienteering",
   "start_url": "/EagleProject/index.html",
-  "display": "standalone"
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "/EagleProject/images/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/EagleProject/images/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
