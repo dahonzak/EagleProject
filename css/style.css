@@ -34,7 +34,8 @@ button {
   border-radius:5px;
 }
 hr {
-  margin:1em;
+  display: block;
+  margin:1em auto;
   width:calc(50% - 2em);
   border-color:var(--c1);
 }
