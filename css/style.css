@@ -157,6 +157,7 @@ video {
   margin:40px auto;
   border-radius:15px;
   width:calc(50%);
+  max-height:calc(75%);
   height:auto;
 }
 #box {

@@ -655,11 +655,13 @@ const shortenTextByPx = function(text, maxWidth) {
 };
 const startBarProgress = (progressBarId) => {
   const progressBar = document.getElementById(progressBarId);
-  progressBar.style.width = "0";
-  progressBar.style.transition = "width "+(basic.mid/1000)+"s linear";
-  progressBar.style.width = "100%";
+  progressBar.style.width = "0"; 
+  progressBar.style.transition = "" + (basic.mid / 1000) + "s linear"; 
   setTimeout(() => {
-      progressBar.style.transition = "none";
-      
-  }, basic.mid);
+    progressBar.style.width = "100%"; 
+  }, 50); 
+  setTimeout(() => {
+    progressBar.style.transition = "none"; 
+    progressBar.style.width = "0"; 
+  }, basic.mid); 
 };
