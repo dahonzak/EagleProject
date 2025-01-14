@@ -197,7 +197,7 @@
     <div class='tab'>
       <h1>Tutorial</h1>
       <h2>How to use the orienteering application?</h2>
-      <p>If you have done orienteering before this application implements all parts of orienteering except the compass. When you open <b class="blue hover" onclick="tab(2);">Maps (Start)</b> there will be maps listed below the legend. If you click on one of the courses, it then opens so that you can then print the map and start the course. Alternatively while on the course you can press the "Options" button and "View Map" to see the map. <br><br>When you have arrived at your first destination (the start) click confirm, to confirm you are in the right location. Continue this process to the end of the course.<br><br> While on the course check the bottom of the screen where it shows your accuracy, if the accuracy is too high (above 15 m) then wait until it stablizes and try again. <br><br>If accuracy is still too high it may be a problem with the device, connection, or internet browser. If you do not see the accuracy bubble at the bottom of the screen make sure location services are turned on for both your phone and the website page. </p>
+      <p>If you have done orienteering before this application implements all parts of orienteering except the compass. When you open <b class="blue hover" onclick="tab(2);">Maps (Start)</b> there will be maps listed below the legend. If you click on one of the courses, it then opens so that you can then print the map and start the course. Alternatively while on the course you can press the "Options" button and "View Map" to see the map. <br><br>When you have arrived at your first destination (the start) click confirm, to confirm you are in the right location. Continue this process to the end of the course.<br><br> While on the course check the bottom of the screen where it shows your <span onclick="tab(18);">accuracy</span>, if the accuracy is too high (above 15 m) then wait until it stablizes and try again. <br><br>If accuracy is still too high it may be a problem with the device, connection, or internet browser. If you do not see the accuracy bubble at the bottom of the screen make sure location services are turned on for both your phone and the website page. </p>
       <div class='button mainPageAlt' onclick='tab(1);'>Back</div>
     </div>
     <!-- 13 -->
@@ -240,6 +240,12 @@
       <h1>Name</h1>
       <input id="name" type="text" placeholder="Type your name here..." maxlength="15" autocomplete="off" />
       <div class='button mainPageBtn' onclick='setName();'>Submit</div>
+    </div>
+    <!-- 18 -->
+    <div class='tab'>
+      <h1>Accuracy Modifier</h1>
+      <input id="accmod" type="text" placeholder="Type your accuracy here..." maxlength="10" value="0.0002" autocomplete="off" />
+      <div class='button mainPageBtn' onclick='setAccuracyModifier();'>Save</div>
     </div>
     <div class="footer"></div>
   </div>

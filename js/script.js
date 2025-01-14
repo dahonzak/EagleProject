@@ -12,7 +12,8 @@ const basic = {
   timer:null,
   hotcold: false,
   hotcolden:0,
-  mid:3500
+  mid:3500,
+  acc:0.0002
 };
 let shareData = {
   title: "Takoma Park Orienteering",
@@ -310,7 +311,7 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
   //the code I was using before
   let withinAccuracy = calculateDistance(currentLat,currentLong,targetLat,targetLong) <= accuracy && position.coords.accuracy <= 15;*/
   
-  let accuracy = 0.0002;
+  let accuracy = basic.acc;
   let withinAccuracy = Math.abs(currentLat - targetLat) <= accuracy && Math.abs(currentLong - targetLong) <= accuracy; 
   
   if (withinAccuracy) { //position.coords.accuracy <= 15 &&
@@ -632,6 +633,14 @@ const setName = function() {
     orienteering["name"] = document.getElementById("name").value;
   }
   tab(6);loadCourse();
+};
+const setAccuracyModifier = function() {
+  const val = document.getElementById("accmod").value;
+  if (val) {
+    basic.acc = parsefload(document.getElementById("accmod").value);
+    orienteering["skips"]++;
+  }
+  tab(6);
 };
 const skipBtn = function() {
   if (orienteering["currentControl"] != 0 && orienteering["currentControl"] < (basic.maps[orienteering["courseindex"]]["Controls"].length-1) && confirm("Are you sure you want to skip this control? You will be disqualified and score will not be added to leaderboard.")) {
