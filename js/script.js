@@ -640,7 +640,7 @@ const setAccuracyModifier = function() {
     basic.acc = parsefload(document.getElementById("accmod").value);
     orienteering["skips"]++;
   }
-  tab(6);
+  tab(0);
 };
 const skipBtn = function() {
   if (orienteering["currentControl"] != 0 && orienteering["currentControl"] < (basic.maps[orienteering["courseindex"]]["Controls"].length-1) && confirm("Are you sure you want to skip this control? You will be disqualified and score will not be added to leaderboard.")) {
