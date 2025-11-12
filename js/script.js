@@ -13,7 +13,8 @@ const basic = {
   hotcold: false,
   hotcolden:0,
   mid:3500,
-  acc:0.0002
+  acc:0.0002,
+  testing:false
 };
 let shareData = {
   title: "Takoma Park Orienteering",
@@ -86,6 +87,10 @@ const tab = function(tab) {
     case 0:
       changeBg("bg.png");
       break;
+    case 6:
+      if (page.testing) {
+        tab(18);
+      }
     case 10:
       changeBg("water.jpg");
       break;
@@ -336,7 +341,7 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
     }
   }
   else { 
-    if (page.tab === 18) {
+    if (page.testing) {
      document.getElementById('accmod').innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m <div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>Get Cords</div>`);
     }
     if (!(position.coords.accuracy <= 15)) {
@@ -440,9 +445,9 @@ localStorage.setItem("Course",JSON.stringify(orienteering));
 }
 setInterval(repeating,5000);
 const loadCourse = function() {
-  if (orienteering["name"] === "*testing account*") {
+  if (orienteering["name"] === "**testing**") {
     if (confirm("Are you sure you want to use testing?")) {
-      tab(18);
+      page.testing = true;
     } else {
       localStorage.clear();
       location.reload();
