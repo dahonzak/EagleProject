@@ -1,7 +1,7 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
 
-const replaceGit = ""; /* /EagleProject 
+const replaceGit = "/EagleProject"; /* /EagleProject 
 */
 const basic = {
   maps:null,
