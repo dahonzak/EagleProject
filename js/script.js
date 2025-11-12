@@ -1,7 +1,7 @@
 // ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
 
-const replaceGit = "/EagleProject"; /* /EagleProject 
+const replaceGit = ""; /* /EagleProject 
 */
 const basic = {
   maps:null,
@@ -77,20 +77,16 @@ const testing = document.getElementById('testing');
 const changeBg = function(bg) {
   document.querySelector(':root').style.setProperty('--bg', "url("+replaceGit+"/images/"+bg+") no-repeat fixed center center");
 };
-const tab = function(tab) {
+const tab = function(tabIndex) {
   const classes = document.getElementsByClassName("tab");
   const shown = document.getElementsByClassName("show");
   shown[0].classList.remove("show");
-  classes[tab].classList.add("show");
-  page.tab = tab;
-  switch (tab) {
+  classes[tabIndex].classList.add("show");
+  page.tab = tabIndex;
+  switch (tabIndex) {
     case 0:
       changeBg("bg.png");
       break;
-    case 6:
-      if (page.testing) {
-        tab(18);
-      }
     case 10:
       changeBg("water.jpg");
       break;
@@ -333,7 +329,11 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
     tab(7);
     startBarProgress("barConfirmed");
     setTimeout(function() {
-      tab(6);
+      if (page.testing) {
+        tab(18);
+      } else {
+        tab(6);
+      }
     },basic.mid);
     }
     else {
@@ -348,14 +348,22 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
       tab(11);
       startBarProgress("barConnection");
       setTimeout(function() {
+        if (page.testing) {
+        tab(18);
+      } else {
         tab(6);
+      }
       },basic.mid);
     }
     else {
       tab(8);
       startBarProgress("barInaccuracy");
       setTimeout(function() {
+        if (page.testing) {
+        tab(18);
+      } else {
         tab(6);
+      }
       },basic.mid);
     }
   }
@@ -448,6 +456,7 @@ const loadCourse = function() {
   if (orienteering["name"] === "**testing**") {
     if (confirm("Are you sure you want to use testing?")) {
       page.testing = true;
+      tab(18);
     } else {
       localStorage.clear();
       location.reload();
