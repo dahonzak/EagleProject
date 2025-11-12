@@ -336,8 +336,9 @@ let accuracyLat = (accuracy/(2*Math.PI*6371000*Math.cos(toRad(targetLat))/360)).
     }
   }
   else { 
-    
-     //testing.innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m<div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>testing</div>`);
+    if (page.tab === 18) {
+     document.getElementById('accmod').innerHTML = ("off by: "+calculateDistance(currentLat,currentLong,targetLat,targetLong)+`m <div onclick='warning("Cords","`+currentLat.toFixed(6)+", "+currentLong.toFixed(6)+` <br> `+targetLat.toFixed(6)+", "+targetLong.toFixed(6)+`",false);'>Get Cords</div>`);
+    }
     if (!(position.coords.accuracy <= 15)) {
       tab(11);
       startBarProgress("barConnection");
@@ -439,6 +440,14 @@ localStorage.setItem("Course",JSON.stringify(orienteering));
 }
 setInterval(repeating,5000);
 const loadCourse = function() {
+  if (orienteering["name"] === "*testing account*") {
+    if (confirm("Are you sure you want to use testing?")) {
+      tab(18);
+    } else {
+      localStorage.clear();
+      location.reload();
+    }
+  } 
    document.getElementById("courseName_on").textContent = orienteering["course"];
   document.getElementById("courseControlLength_on").textContent = (basic.maps[orienteering["courseindex"]]["Controls"].length-2);
   document.getElementById("courseDistance_on").textContent = orienteering["length"].toFixed(1)+" km";
@@ -633,14 +642,6 @@ const setName = function() {
     orienteering["name"] = document.getElementById("name").value;
   }
   tab(6);loadCourse();
-};
-const setAccuracyModifier = function() {
-  const val = document.getElementById("accmod").value;
-  if (val) {
-    basic.acc = parsefload(document.getElementById("accmod").value);
-    orienteering["skips"]++;
-  }
-  tab(0);
 };
 const skipBtn = function() {
   if (orienteering["currentControl"] != 0 && orienteering["currentControl"] < (basic.maps[orienteering["courseindex"]]["Controls"].length-1) && confirm("Are you sure you want to skip this control? You will be disqualified and score will not be added to leaderboard.")) {
