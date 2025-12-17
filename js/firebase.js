@@ -1,3 +1,6 @@
+// If you see this please dont be mean i cant afford a server rn
+// If you are someone new to coding this a prime example of what not to do --> 
+// If you are a hacker, or should i say F12 knower this is not connected to anything monatary (firebase free edition) so spamming or attempting to ruin the storage does absolutely nothing also if you add any fake scores im just going to revert history if you put a bot on this site you are wasting your time and money and I will honeypot you. 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
 const firebaseConfig = {

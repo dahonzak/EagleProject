@@ -1,4 +1,4 @@
-// ------------ Copywrite Dominik Honzak (c) 2024 ------------ //
+// ------------ Copyright Dominik Honzak (c) 2024 ------------ //
 //Created Entirely from scratch by Dominik Honzak//
 
 const replaceGit = "/EagleProject"; /* /EagleProject 
